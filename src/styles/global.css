@@ -90,13 +90,16 @@ html {
 }
 
 body {
+  max-width: 1536px;
   background: hsl(var(--color-background));
-  background-color: rgb(142, 142, 142);
+  /* background-color: rgb(142, 142, 142); */
   color: hsl(var(--color-foreground));
   -webkit-font-smoothing: antialiased;
   font-feature-settings:
     'rlig' 1,
     'calt' 1;
+  margin: 0 auto;
+  padding: 0;
 }
 
 a {
@@ -124,7 +127,7 @@ button {
    Scrollbar Styling
    -------------------------------------------------------- */
 * {
-  scrollbar-width: thin;
+  scrollbar-width: none;
   scrollbar-color: hsl(var(--color-muted-foreground)) transparent;
 }
 

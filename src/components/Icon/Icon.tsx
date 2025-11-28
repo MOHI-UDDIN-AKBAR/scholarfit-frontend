@@ -9,6 +9,7 @@ export interface IconProps {
   className?: string;
   ariaLabel?: string;
   ariaHidden?: boolean;
+  onClick?: () => void;
 }
 
 // Custom viewBox for specific icons that need different dimensions

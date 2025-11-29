@@ -103,12 +103,12 @@ body {
 }
 
 a {
-  color: hsl(var(--color-primary-600));
+  /* color: hsl(var(--color-primary-600)); */
   text-decoration: none;
 }
 a:hover {
-  color: hsl(var(--color-primary-700));
-  text-decoration: underline;
+  /* color: hsl(var(--color-primary-700)); */
+  /* text-decoration: underline; */
 }
 
 img,

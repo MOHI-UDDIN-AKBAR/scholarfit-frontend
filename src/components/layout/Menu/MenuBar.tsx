@@ -1,6 +1,6 @@
 import { useAppDispatch } from '../../../store/hooks';
 import { toggleSideBar } from '../../../store/slices/toggleSlice';
-import Icon from '../../Icon/Icon';
+import Icon from '../../ui/Icon/Icon';
 
 const MenuBar: React.FC = () => {
   const dispatch = useAppDispatch();

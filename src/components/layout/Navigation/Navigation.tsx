@@ -1,6 +1,6 @@
 import clsx from 'clsx';
-import { NAV_ITEMS } from '../../../config/navigation';
-import Icon from '../../Icon/Icon';
+import { navItems } from '../../../config/navigation';
+import Icon from '../../ui/Icon/Icon';
 import Logo from '../../shared/Logo/Logo';
 import NavItem from './NavItem';
 import { useAppDispatch, useAppState } from '../../../store/hooks';
@@ -9,7 +9,6 @@ import { toggleSideBar } from '../../../store/slices/toggleSlice';
 const Navigation: React.FC = () => {
   const isOpen = useAppState((state) => state.toggle.isOpen);
   const dispatch = useAppDispatch();
-  console.log(isOpen);
   return (
     <nav
       className={clsx(
@@ -27,7 +26,7 @@ const Navigation: React.FC = () => {
             onClick={() => dispatch(toggleSideBar())}
           />
         </li>
-        {NAV_ITEMS.map((item) => (
+        {navItems.map((item) => (
           <NavItem label={item.label} key={item.label} />
         ))}
       </ul>

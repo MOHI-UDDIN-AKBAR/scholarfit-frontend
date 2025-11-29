@@ -1,6 +1,5 @@
-// src/components/Icon.tsx
 import { forwardRef, memo } from 'react';
-import { IconMap, type IconName } from '../../assets/Icons';
+import { IconMap, type IconName } from '.';
 
 export interface IconProps {
   name: IconName;
@@ -12,9 +11,18 @@ export interface IconProps {
   onClick?: () => void;
 }
 
-// Custom viewBox for specific icons that need different dimensions
 const customViewBox: Partial<Record<IconName, string>> = {
   dumbbell: '0 0 640 512',
+  calculator: '0 0 640 512',
+  calendar: '0 0 640 512',
+  trophy: '0 0 640 512',
+  chart: '0 0 640 512',
+  mobile: '0 0 640 512',
+  star: '0 0 640 512',
+  facebook: '0 0 640 512',
+  instagram: '0 0 640 512',
+  tweeter: '0 0 640 512',
+  linkedIn: '0 0 640 512',
 };
 
 const Icon = forwardRef<SVGSVGElement, IconProps>(
@@ -25,10 +33,8 @@ const Icon = forwardRef<SVGSVGElement, IconProps>(
     const path = IconMap[name];
     if (!path) return null;
 
-    // Handle size - use Tailwind classes for numbers, direct values for strings
     const sizeClass = typeof size === 'number' ? `h-${size} w-${size}` : `h-[${size}] w-[${size}]`;
 
-    // Use custom viewBox if specified, otherwise default
     const viewBox = customViewBox[name] || '0 0 24 24';
 
     return (

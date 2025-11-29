@@ -1,4 +1,4 @@
-import Icon from '../../Icon/Icon';
+import Icon from '../../ui/Icon/Icon';
 
 const Logo: React.FC = () => {
   return (

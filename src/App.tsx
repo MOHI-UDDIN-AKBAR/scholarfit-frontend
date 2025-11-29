@@ -1,11 +1,8 @@
-import Home from './pages/Home/Home';
+import RoutesLayout from './routes/RoutesLayout';
 import './styles/global.css';
+
 const App: React.FC = () => {
-  return (
-    <>
-      <Home />
-    </>
-  );
+  return <RoutesLayout />;
 };
 
 export default App;

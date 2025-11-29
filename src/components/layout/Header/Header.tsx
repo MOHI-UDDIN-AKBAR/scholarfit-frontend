@@ -8,7 +8,7 @@ const Header: React.FC = () => {
         <li className="text-lg text-gray-700 hover:text-primary-600  hover:cursor-pointer px-2 py-1 max-lg:py-1 border-2 border-primary-700 rounded-md font-bold mx-auto">
           Sign in
         </li>
-        <li className="hover:cursor-pointer inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 xl:hidden">
+        <li className="hover:cursor-pointer inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700">
           Get Started
         </li>
       </ul>

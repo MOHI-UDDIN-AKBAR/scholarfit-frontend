@@ -10,10 +10,10 @@ const Testimonial: React.FC<TestimonialProps> = ({
   testimonial: { name, profession, review, reviewRate },
 }) => {
   return (
-    <div className="bg-gray-50 p-6 rounded-lg">
+    <div className="p-6 rounded-lg bg-gray-50">
       <div className="flex items-center">
         <div className="shrink-0">
-          <div className="h-10 w-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold">
+          <div className="flex items-center justify-center w-10 h-10 font-bold rounded-full bg-primary-100 text-primary-600">
             {getFirstChar(name)}
           </div>
         </div>
@@ -23,9 +23,9 @@ const Testimonial: React.FC<TestimonialProps> = ({
         </div>
       </div>
       <div className="mt-4">
-        <p className="text-gray-600 italic">{review}</p>
+        <p className="italic text-gray-600">{review}</p>
       </div>
-      <div className="mt-4 flex text-yellow-400">
+      <div className="flex mt-4 text-yellow-400">
         {Array.from({ length: Math.max(0, Math.min(reviewRate, 5)) }).map((_, i) => (
           <Icon name="star" key={`star-${i}`}></Icon>
         ))}

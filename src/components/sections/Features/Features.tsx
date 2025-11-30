@@ -1,22 +1,15 @@
-import clsx from 'clsx';
 import Feature from './Feature';
 import { features } from '../../../config/features';
 
 const Features: React.FC = () => {
   return (
-    <section className={clsx('grid w-full mb-18 lg:mb-24')}>
-      <div className={clsx('grid place-items-center gap-4')}>
-        <h2 className={clsx('uppercase text-primary-600 font-semibold text-lg tracking-wide')}>
-          Features
-        </h2>
-        <p
-          className={clsx(
-            'max-sm:text-4xl text-5xl xl:text-6xl sm:tracking-tight font-extrabold text-gray-900'
-          )}
-        >
+    <section className="grid w-full mb-18 lg:mb-24">
+      <div className="grid gap-4 place-items-center">
+        <h2 className="text-lg font-semibold tracking-wide uppercase text-primary-600">Features</h2>
+        <p className="text-5xl font-extrabold text-gray-900 max-sm:text-4xl xl:text-6xl sm:tracking-tight">
           Everything You Need
         </p>
-        <p className={clsx('mt-1 max-sm:text-lg text-xl text-gray-500')}>
+        <p className="mt-1 text-xl text-gray-500 max-sm:text-lg">
           Comprehensive fitness tools designed to help you succeed
         </p>
       </div>

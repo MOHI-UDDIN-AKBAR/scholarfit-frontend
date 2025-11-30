@@ -16,12 +16,12 @@ const HeroContainer: React.FC = () => {
           Smart Fitness Tracking
         </small>
         <h1 className="">
-          <span className="mt-1 block text-4xl tracking-tight font-extrabold sm:text-5xl xl:text-6xl">
+          <span className="block mt-1 text-4xl font-extrabold tracking-tight sm:text-5xl xl:text-6xl">
             <span className="block text-gray-900">Transform Your</span>
             <span className="block text-primary-600">Fitness Journey</span>
           </span>
         </h1>
-        <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl w-4/5 text-center sm:text-left">
+        <p className="w-4/5 mt-3 text-base text-center text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl sm:text-left">
           ScholarFit combines exercise science with smart technology to create personalized workout
           plans, track your progress, and help you achieve your fitness goals faster.
         </p>
@@ -41,7 +41,7 @@ const HeroContainer: React.FC = () => {
                 'inline-flex items-center justify-center px-5 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50'
               )}
             >
-              <Icon name="play" className="mr-2 w-8 h-6" />
+              <Icon name="play" className="w-8 h-6 mr-2" />
               Watch Demo
             </button>
           </div>
@@ -51,33 +51,33 @@ const HeroContainer: React.FC = () => {
         </div>
       </div>
       <aside className={clsx('px-2 md:px-0 max-xl:my-10 ')}>
-        <div className="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
-          <div className="bg-white rounded-lg overflow-hidden">
-            <div className="bg-gray-800 px-4 py-2 flex items-center">
+        <div className="relative w-full mx-auto rounded-lg shadow-lg lg:max-w-md">
+          <div className="overflow-hidden bg-white rounded-lg">
+            <div className="flex items-center px-4 py-2 bg-gray-800">
               <div className="flex space-x-2">
-                <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
               </div>
-              <div className="flex-1 text-center text-white text-sm font-medium">
+              <div className="flex-1 text-sm font-medium text-center text-white">
                 ScholarFit Dashboard
               </div>
             </div>
             <div className="p-4 bg-linear-to-br from-primary-50 to-white">
               <div className="grid grid-cols-2 gap-4 mb-4">
-                <div className="bg-white p-3 rounded-lg shadow-sm">
+                <div className="p-3 bg-white rounded-lg shadow-sm">
                   <div className="text-xs text-gray-500">Current Streak</div>
                   <div className="text-lg font-bold text-gray-900">5 days</div>
                 </div>
-                <div className="bg-white p-3 rounded-lg shadow-sm">
+                <div className="p-3 bg-white rounded-lg shadow-sm">
                   <div className="text-xs text-gray-500">Weekly Goal</div>
                   <div className="text-lg font-bold text-gray-900">3/4</div>
                 </div>
               </div>
-              <div className="bg-white p-3 rounded-lg shadow-sm mb-4">
-                <div className="text-xs text-gray-500 mb-2">Today's Workout</div>
+              <div className="p-3 mb-4 bg-white rounded-lg shadow-sm">
+                <div className="mb-2 text-xs text-gray-500">Today's Workout</div>
                 <div className="flex items-center">
-                  <div className="bg-primary-100 p-2 rounded-md mr-3">
+                  <div className="p-2 mr-3 rounded-md bg-primary-100">
                     <Icon name="dumbbell" className=" text-primary-600" />
                   </div>
                   <div>
@@ -87,10 +87,10 @@ const HeroContainer: React.FC = () => {
                 </div>
               </div>
               <div className="flex justify-between">
-                <button className="text-xs bg-primary-600 text-white px-3 py-1 rounded">
+                <button className="px-3 py-1 text-xs text-white rounded bg-primary-600">
                   Start Workout
                 </button>
-                <button className="text-xs bg-gray-200 text-gray-700 px-3 py-1 rounded">
+                <button className="px-3 py-1 text-xs text-gray-700 bg-gray-200 rounded">
                   Reschedule
                 </button>
               </div>

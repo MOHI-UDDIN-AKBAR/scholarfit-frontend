@@ -8,7 +8,7 @@ type FeatureProps = {
 const Feature: React.FC<FeatureProps> = ({ featureItem: { title, color, label, text } }) => {
   return (
     <div className="pt-6">
-      <div className="flow-root bg-gray-50 rounded-lg px-6 pb-8">
+      <div className="flow-root px-6 pb-8 rounded-lg bg-gray-50">
         <div className="-mt-6">
           <div>
             <span
@@ -17,10 +17,10 @@ const Feature: React.FC<FeatureProps> = ({ featureItem: { title, color, label, t
                 color
               )}
             >
-              <Icon name={label} className="text-white w-6 h-6 lg:w-8 lg:h-8"></Icon>
+              <Icon name={label} className="w-6 h-6 text-white lg:w-8 lg:h-8"></Icon>
             </span>
           </div>
-          <h3 className="mt-8 text-lg font-medium text-gray-900 tracking-tight">{title}</h3>
+          <h3 className="mt-8 text-lg font-medium tracking-tight text-gray-900">{title}</h3>
           <p className="mt-5 text-base text-gray-500">{text}</p>
         </div>
       </div>

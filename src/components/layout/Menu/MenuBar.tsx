@@ -8,7 +8,7 @@ const MenuBar: React.FC = () => {
   return (
     <button
       aria-label="Toggle navigation menu"
-      className="flex h-10 w-12 items-center justify-center rounded-md lg:hidden"
+      className="flex items-center justify-center w-12 h-10 rounded-md xl:hidden"
       onClick={() => dispatch(toggleSideBar())}
     >
       <Icon name="menu" size={16} className="text-primary-600" />

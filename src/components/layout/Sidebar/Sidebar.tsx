@@ -10,11 +10,11 @@ const Sidebar: React.FC = () => {
   return (
     <div
       className={clsx(
-        'flex justify-between items-center  w-fit  max-lg:grow-0 lg:grow  relative ',
-        isOpen ? 'max-lg:w-3/5  max-md:min-w-full ' : ''
+        'flex justify-between items-center w-fit max-xl:grow-0 xl:grow absolute z-10',
+        isOpen ? 'max-xl:w-3/5 max-md:min-w-full ' : ''
       )}
     >
-      <div className="max-lg:hidden">{<Logo />}</div>
+      <div className="max-xl:hidden">{<Logo />}</div>
       {<MenuBar />}
       <Navigation />
     </div>

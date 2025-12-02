@@ -1,18 +1,11 @@
-import clsx from 'clsx';
+import Button from '../../ui/Button/Button';
 import Icon from '../../ui/Icon/Icon';
 
 const HeroContainer: React.FC = () => {
   return (
-    <section
-      className={clsx('p-2', 'grid xl:grid-cols-2 justify-between items-center', 'my-25 xl:my-40')}
-    >
-      <div className={clsx(' grid place-items-center')}>
-        <small
-          className={clsx(
-            'text-gray-600',
-            'block text-sm font-semibold uppercase tracking-wide text-gray-500 sm:text-base lg:text-sm xl:text-base '
-          )}
-        >
+    <section className="grid items-center justify-between p-2 mx-auto max-w-7xl xl:grid-cols-2 my-25 xl:my-40">
+      <div className="grid max-xl:place-items-center">
+        <small className="block text-sm font-semibold tracking-wide text-gray-600 uppercase sm:text-base lg:text-sm xl:text-base ">
           Smart Fitness Tracking
         </small>
         <h1 className="">
@@ -25,33 +18,29 @@ const HeroContainer: React.FC = () => {
           ScholarFit combines exercise science with smart technology to create personalized workout
           plans, track your progress, and help you achieve your fitness goals faster.
         </p>
-        <div className={clsx('mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0')}>
-          <div className={clsx('flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4')}>
-            <button
+        <div className="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0">
+          <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
+            <Button
               type="button"
-              className={clsx(
-                'inline-flex items-center justify-center px-5 py-3 border border-transparent text-base  font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700'
-              )}
+              className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-primary-600 hover:bg-primary-700"
             >
               Start Free Trial
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
-              className={clsx(
-                'inline-flex items-center justify-center px-5 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50'
-              )}
+              className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
             >
               <Icon name="play" className="w-8 h-6 mr-2" />
               Watch Demo
-            </button>
+            </Button>
           </div>
-          <p className={clsx('mt-3 text-sm text-gray-500', 'text-center xl:text-left')}>
+          <p className="mt-3 text-sm text-center text-gray-500 xl:text-left">
             Free to use • No credit card required
           </p>
         </div>
       </div>
-      <aside className={clsx('px-2 md:px-0 max-xl:my-10 ')}>
-        <div className="relative w-full mx-auto rounded-lg shadow-lg lg:max-w-md">
+      <aside className="px-2 md:px-0 max-xl:my-10">
+        <div className="relative w-full mx-auto rounded-lg shadow-lg -z-10 lg:max-w-md">
           <div className="overflow-hidden bg-white rounded-lg">
             <div className="flex items-center px-4 py-2 bg-gray-800">
               <div className="flex space-x-2">
@@ -87,12 +76,12 @@ const HeroContainer: React.FC = () => {
                 </div>
               </div>
               <div className="flex justify-between">
-                <button className="px-3 py-1 text-xs text-white rounded bg-primary-600">
+                <Button className="px-3 py-1 text-xs text-white rounded bg-primary-600">
                   Start Workout
-                </button>
-                <button className="px-3 py-1 text-xs text-gray-700 bg-gray-200 rounded">
+                </Button>
+                <Button className="px-3 py-1 text-xs text-gray-700 bg-gray-200 rounded">
                   Reschedule
-                </button>
+                </Button>
               </div>
             </div>
           </div>

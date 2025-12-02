@@ -12,22 +12,22 @@ const Navigation: React.FC = () => {
   return (
     <nav
       className={clsx(
-        ' shrink grow lg:ml-8   max-lg:min-h-dvh max-lg:absolute max-lg:top-0 z-50 bg-[hsl(var(--color-background))] dark:bg-[hsl(var(color-background))] max-lg:w-full',
-        isOpen ? 'flex' : 'max-lg:hidden'
+        'shrink grow xl:ml-8 max-xl:min-h-dvh max-xl:absolute max-xl:top-0 z-50  max-xl:w-full bg-[hsl(var(--color-background))] dark:bg-[hsl(var(color-background))]',
+        isOpen ? 'flex' : 'max-xl:hidden'
       )}
     >
-      <ul className="flex max-lg:flex-col gap-6 max-lg:gap-2 2xl:gap-16 items-center w-full">
-        <li className="inline-flex items-center px-1 pt-1  text-base xl:text-lg font-medium capitalize   max-lg:w-full max-lg:p-4 max-lg:pl-6 lg:hidden justify-between">
+      <ul className="flex items-center w-full gap-6 max-xl:flex-col max-xl:gap-2 2xl:gap-16">
+        <li className="inline-flex items-center justify-between px-1 pt-1 text-base font-medium capitalize xl:text-lg max-xl:w-full max-xl:p-4 max-xl:pl-6 xl:hidden">
           <Logo />
           <Icon
             name="close"
             size={12}
-            className="border border-gray-300 rounded-full hover:cursor-pointer text-primary-600 self-center"
+            className="self-center border border-gray-300 rounded-full hover:cursor-pointer text-primary-600"
             onClick={() => dispatch(toggleSideBar())}
           />
         </li>
         {navItems.map((item) => (
-          <NavItem label={item.label} key={item.label} />
+          <NavItem item={item} key={item.label} />
         ))}
       </ul>
     </nav>

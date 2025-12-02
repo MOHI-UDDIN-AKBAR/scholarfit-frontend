@@ -7,14 +7,14 @@ import HowItWorks from '../../components/sections/HowItWorks/HowItWorks';
 
 const Home: React.FC = () => {
   return (
-    <>
+    <section className="py-6 mx-auto max-w-8xl sm:px-6 lg:px-8">
       <HeroContainer />
       <Features />
       <HowItWorks />
       <Testimonials />
       <PlatformStats />
       <CallToActionSection />
-    </>
+    </section>
   );
 };
 

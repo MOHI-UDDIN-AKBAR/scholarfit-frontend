@@ -1,5 +1,7 @@
+import ExerciseLibrary from '../../components/exercises/ExerciseLibrary/ExerciseLibrary';
+
 const Exercises: React.FC = () => {
-  return <div>Exercises</div>;
+  return <ExerciseLibrary />;
 };
 
 export default Exercises;

@@ -27,7 +27,7 @@ const Navigation: React.FC = () => {
           />
         </li>
         {navItems.map((item) => (
-          <NavItem item={item} key={item.label} />
+          <NavItem item={item} key={item.label} onClick={() => dispatch(toggleSideBar(false))} />
         ))}
       </ul>
     </nav>

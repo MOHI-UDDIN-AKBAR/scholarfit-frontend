@@ -6,11 +6,11 @@ const SplitOptionsList: React.FC = () => {
   return (
     <section>
       <h3 className="mb-4 text-lg font-medium text-gray-900">{questionTitle}</h3>
-      <div className="grid space-y-4 ">
+      <form className="grid space-y-4 ">
         {options.map((splitOption) => (
           <SplitOption splitOption={splitOption} key={splitOption.value} />
         ))}
-      </div>
+      </form>
     </section>
   );
 };

@@ -2,9 +2,18 @@ import {
   onboardingGoalCards,
   onboardingHeaderContent,
 } from '../../../../../config/onboarding-content';
-import Icon from '../../../../ui/Icon/Icon';
 import HeaderContent from '../../shared/HeaderContent';
 import GoalCard from './GoalCard';
+
+const GoalCardGroup: React.FC = () => {
+  return (
+    <form className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      {onboardingGoalCards.map((goalCard) => (
+        <GoalCard goalCard={goalCard} key={goalCard.goal} />
+      ))}
+    </form>
+  );
+};
 
 const GoalsStep: React.FC = () => {
   return (
@@ -16,12 +25,7 @@ const GoalsStep: React.FC = () => {
             What are your primary fitness goals?
           </h2>
           <p className="mb-8 text-gray-600">Select all that apply to you</p>
-
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {onboardingGoalCards.map((goalCard) => (
-              <GoalCard goalCard={goalCard} key={goalCard.goal} />
-            ))}
-          </div>
+          <GoalCardGroup />
         </div>
       </div>
     </div>

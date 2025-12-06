@@ -1,20 +1,12 @@
-import clsx from 'clsx';
 import HeaderContent from '../../shared/HeaderContent';
-import { onboardingHeaderContent } from '../../../../../config/onboarding-content';
-import Icon from '../../../../ui/Icon/Icon';
 import FrequencyOptionsGroup from './WorkoutFrequencySelector/FrequencyOptionsGroup';
 import DurationOptionsGroup from './WorkoutDurationSelector/DurationOptionsGroup';
 import SplitOptionsList from './WorkoutSplitSelector/SplitOptionsList';
+import { onboardingHeaderContent } from '../../../../../config/onboarding-content';
 
 const ScheduleStep: React.FC = () => {
   return (
-    <div
-      id="step-4"
-      className={clsx(
-        'onboarding-step'
-        // 'hidden'
-      )}
-    >
+    <div id="step-4" className="onboarding-step">
       <HeaderContent headerContent={onboardingHeaderContent.scheduleStep} />
 
       <div className="overflow-hidden bg-white rounded-lg shadow">

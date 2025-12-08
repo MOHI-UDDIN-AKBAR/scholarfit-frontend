@@ -13,14 +13,14 @@ const SplitOption: React.FC<SplitOptionProps> = ({
 
   const handleWorkoutSplit = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
-      console.log(e.target.value);
       dispatch(selectPreferredWorkoutSplit(e.target.value as string));
     }
   };
+
   const preferredWorkoutSplit = useAppState(
     (state) => state.onboarding.onboardingData.schedule.preferredWorkoutSplit
   );
-  console.log(preferredWorkoutSplit);
+
   return (
     <label className="split-option">
       <input

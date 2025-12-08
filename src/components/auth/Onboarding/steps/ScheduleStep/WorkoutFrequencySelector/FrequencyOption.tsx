@@ -16,7 +16,7 @@ const FrequencyOption: React.FC<FrequencyOptionProps> = ({ frequencyOption: { va
   const workoutFrequency = useAppState(
     (state) => state.onboarding.onboardingData.schedule.workoutFrequency
   );
-  console.log(workoutFrequency);
+
   return (
     <label className="schedule-option">
       <input

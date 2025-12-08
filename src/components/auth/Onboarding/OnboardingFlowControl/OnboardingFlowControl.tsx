@@ -8,13 +8,16 @@ import {
 import Button from '../../../ui/Button/Button';
 import { useCallback } from 'react';
 import { shallowEqual } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 const OnboardingFlowControl: React.FC = () => {
-  const { isFirstStep, isLastStep, isReadyToContinue } = useAppState(
+  const navigate = useNavigate();
+  const { isFirstStep, isLastStep, isReadyToContinue, onboardingData } = useAppState(
     (state) => ({
       isFirstStep: state.onboarding.isFirstStep,
       isLastStep: state.onboarding.isLastStep,
       isReadyToContinue: state.onboarding.isReadyToContinue,
+      onboardingData: state.onboarding.onboardingData,
     }),
     shallowEqual
   );
@@ -24,6 +27,11 @@ const OnboardingFlowControl: React.FC = () => {
   const goBack = useCallback(() => dispatch(previousOnboardingStep()), [previousOnboardingStep]);
   const goNext = useCallback(() => dispatch(nextOnboardingStep()), [nextOnboardingStep]);
 
+  const handleOnboardingSubmission = () => {
+    console.log(onboardingData);
+    // ready for post api call with
+    navigate('/workouts');
+  };
   return (
     <div>
       <div className={clsx('flex mt-10', isFirstStep ? 'justify-end' : ' justify-between')}>
@@ -42,15 +50,25 @@ const OnboardingFlowControl: React.FC = () => {
                 ? 'bg-gray-500 hover:cursor-not-allowed!'
                 : 'bg-primary-500 hover:bg-primary-600'
             )}
-            onClick={goNext}
             disabled={!isReadyToContinue}
+            onClick={goNext}
           >
             Continue
             <Icon name="arrowRight" className="ml-2"></Icon>
           </Button>
         )}
         {isLastStep && (
-          <Button type="button" className="complete-btn">
+          <Button
+            type="button"
+            onClick={handleOnboardingSubmission}
+            className={clsx(
+              'complete-btn',
+              !isReadyToContinue
+                ? 'bg-gray-500 hover:cursor-not-allowed!'
+                : 'bg-green-600 hover:bg-green-700'
+            )}
+            disabled={!isReadyToContinue}
+          >
             Complete Setup
             <Icon name="check" className="ml-2"></Icon>
           </Button>

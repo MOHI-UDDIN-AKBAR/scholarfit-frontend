@@ -26,8 +26,6 @@ const ExperienceOption: React.FC<ExperienceOptionProps> = ({
   };
   const experience = useAppState((state) => state.onboarding.onboardingData.experienceLevel);
 
-  console.log(experience);
-
   return (
     <label className="experience-option">
       <input

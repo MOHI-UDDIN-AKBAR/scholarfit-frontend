@@ -11,14 +11,13 @@ const DurationOption: React.FC<DurationOptionProps> = ({ durationOption: { value
 
   const handleWorkoutDuration = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
-      console.log(e.target.value);
       dispatch(selectWorkoutDuration(parseInt(e.target.value) as number));
     }
   };
   const workoutDuration = useAppState(
     (state) => state.onboarding.onboardingData.schedule.workoutDuration
   );
-  console.log(workoutDuration);
+
   return (
     <label className="schedule-option">
       <input

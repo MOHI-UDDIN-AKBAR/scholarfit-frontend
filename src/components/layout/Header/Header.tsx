@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
 import Sidebar from '../Sidebar/Sidebar';
+import Button from '../../ui/Button/Button';
 
 const Header: React.FC = () => {
   return (
@@ -7,11 +8,19 @@ const Header: React.FC = () => {
       <div className="relative grid justify-end w-full xl:items-center">
         <Sidebar />
         <ul className="relative z-0 grid grid-cols-2 gap-6 mr-2 shrink xl:mr-3">
-          <li className="px-4 py-1 text-lg font-bold text-center text-gray-700 border-2 rounded-md lg:px-6 w-fit hover:text-primary-600 hover:cursor-pointer border-primary-700">
-            <Link to="/login">Sign in</Link>
+          <li>
+            <Link to="/login">
+              <Button className="inline-flex items-center px-4 py-1 text-lg font-bold bg-white border-2 rounded-md text-primary-600 border-primary-600 hover:text-primary-700 focus:outline-none">
+                Sign in
+              </Button>
+            </Link>
           </li>
-          <li className="grid w-full px-4 py-1 text-base font-medium text-center text-white border border-transparent rounded-md shadow-sm lg:px-6 hover:cursor-pointer bg-primary-600 hover:bg-primary-700 place-items-center">
-            <Link to="/register"> Get Started</Link>
+          <li>
+            <Link to="/register">
+              <Button className="inline-flex items-center px-4 py-1 text-lg font-medium text-white border-2 border-transparent rounded-md bg-primary-600 hover:bg-primary-700 focus:outline-none">
+                Get Started
+              </Button>
+            </Link>
           </li>
         </ul>
       </div>

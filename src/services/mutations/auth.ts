@@ -1,57 +1,66 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { register, login, logout, refreshToken } from '../api/auth';
-import { AUTH_KEYS } from '../queries/auth';
+import { register, login, logout, refreshAccessToken } from '../api/auth';
+import type { NavigateFunction } from 'react-router';
+import { reduxTokenManager } from '../axios/reduxTokenManager';
+import { AUTH_QUERY_KEYS } from '../../utils/constants/queryKeys/auth';
 
-export const useRegister = () =>
-  useMutation({
-    mutationKey: AUTH_KEYS.register,
+export const useRegisterUser = (navigate: NavigateFunction) => {
+  return useMutation({
+    mutationKey: AUTH_QUERY_KEYS.register,
     mutationFn: register,
     onSuccess: (data) => {
-      console.log(`${AUTH_KEYS.register} user ${data.id} is registered successfully!`);
+      console.info(
+        `[${AUTH_QUERY_KEYS.register}] user ${data.user.id} is registered successfully!`
+      );
+      navigate('/login');
     },
     onError: (error) => {
-      console.error(`${AUTH_KEYS.register} user failed to register : `, error.message);
-    },
-  });
-
-export const useLogin = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationKey: AUTH_KEYS.login,
-    mutationFn: login,
-    onSuccess: ({ user }) => {
-      console.log(`${AUTH_KEYS.login} user ${user.id} is logged in successfully!`);
-    },
-    onError: (error) => {
-      console.error(`${AUTH_KEYS.login} user failed to logged in : `, error.message);
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: AUTH_KEYS.userProfile });
+      console.error(`[${AUTH_QUERY_KEYS.register}] user failed to register : `, error.message);
     },
   });
 };
 
-export const useLogout = () =>
-  useMutation({
-    mutationKey: AUTH_KEYS.logout,
-    mutationFn: logout,
-    onSuccess: () => {
-      console.log(`${AUTH_KEYS.logout} Logged out successfully!`);
+export const useLogin = (navigate: NavigateFunction) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationKey: AUTH_QUERY_KEYS.login,
+    mutationFn: login,
+    onSuccess: ({ user, accessToken }) => {
+      console.info(`[${AUTH_QUERY_KEYS.login}] user ${user.id} is logged in successfully!`);
+      reduxTokenManager.setAccessToken(accessToken);
+      navigate('/');
     },
     onError: (error) => {
-      console.error(`${AUTH_KEYS.logout} failed to logged out: `, error.message);
+      console.error(`[${AUTH_QUERY_KEYS.login}] user failed to logged in : `, error.message);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: AUTH_QUERY_KEYS.userProfile });
+    },
+  });
+};
+
+export const useLogout = (navigate: NavigateFunction) =>
+  useMutation({
+    mutationKey: AUTH_QUERY_KEYS.logout,
+    mutationFn: logout,
+    onSuccess: () => {
+      console.info(`[${AUTH_QUERY_KEYS.logout}] Logged out successfully!`);
+      navigate('/');
+    },
+    onError: (error) => {
+      console.error(`[${AUTH_QUERY_KEYS.logout}] failed to logged out: `, error.message);
     },
   });
 
 export const useRefreshToken = () =>
   useMutation({
-    mutationKey: AUTH_KEYS.refresh,
-    mutationFn: refreshToken,
+    mutationKey: AUTH_QUERY_KEYS.refresh,
+    mutationFn: refreshAccessToken,
     onSuccess: () => {
-      console.log(`${AUTH_KEYS.refresh} token refreshed successfully!`);
+      console.info(`[${AUTH_QUERY_KEYS.refresh}] token refreshed successfully!`);
     },
     onError: (error) => {
-      console.error(`${AUTH_KEYS.refresh} failed to refresh token : `, error.message);
+      console.error(`[${AUTH_QUERY_KEYS.refresh}] failed to refresh token : `, error.message);
     },
   });

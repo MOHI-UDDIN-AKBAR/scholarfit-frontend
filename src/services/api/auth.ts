@@ -2,32 +2,47 @@ import type {
   AuthResponse,
   LoginFormState,
   RegisterFormData,
-  Tokens,
+  AccessToken,
   UserProfile,
 } from '../../types/auth';
-import { axiosInstance } from '../axios/axiosInstance';
+import { api } from '../axios/axios';
+import type { ApiResponse } from '../types';
 
-export const register = async (registrationData: RegisterFormData): Promise<UserProfile> => {
-  const { data } = await axiosInstance.post<UserProfile>('/auth/register', registrationData);
+export const register = async (
+  registrationData: RegisterFormData
+): Promise<{ user: UserProfile }> => {
+  const {
+    data: { data },
+  } = await api.post<ApiResponse<{ user: UserProfile }>>('/auth/register', registrationData);
+  console.log(data);
   return data;
 };
 
 export const login = async (loginData: LoginFormState): Promise<AuthResponse> => {
-  const { data } = await axiosInstance.post<AuthResponse>('/auth/login', loginData);
+  const {
+    data: { data },
+  } = await api.post<ApiResponse<AuthResponse>>('/auth/login', loginData);
+  console.log(data);
   return data;
 };
 
-export const refreshToken = async (token: string): Promise<Tokens> => {
-  const { data } = await axiosInstance.post<Tokens>('/auth/refresh', token);
+export const refreshAccessToken = async (): Promise<AccessToken> => {
+  const {
+    data: { data },
+  } = await api.post<ApiResponse<AccessToken>>('/auth/refresh');
   return data;
 };
 
-export const logout = async (token: string): Promise<{ message: string }> => {
-  const { data } = await axiosInstance.post<{ message: string }>('/auth/logout', token);
+export const logout = async (): Promise<{ message: string }> => {
+  const {
+    data: { data },
+  } = await api.post<ApiResponse<{ message: string }>>('/auth/logout');
   return data;
 };
 
 export const getUserProfile = async (): Promise<UserProfile> => {
-  const { data } = await axiosInstance.get<UserProfile>('/auth/logout');
+  const {
+    data: { data },
+  } = await api.get<ApiResponse<UserProfile>>('/auth/logout');
   return data;
 };

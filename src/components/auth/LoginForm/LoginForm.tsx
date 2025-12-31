@@ -1,22 +1,28 @@
 import InputField from '../../ui/Input/InputField';
 import { useActionState, useState } from 'react';
-import { loginUser } from '../../../actions/auth-action';
+import { performLogin } from '../../../actions/auth-action';
 import type { LoginFormState } from '../../../types/auth';
 import { LoadingSpinner } from '../../shared/LoadingSpinner/LoadingSpinner';
 import Button from '../../ui/Button/Button';
 import clsx from 'clsx';
+import { useNavigate } from 'react-router';
+import { useLogin } from '../../../services/mutations/auth';
 
-export const initialLoginFormState: LoginFormState = {
+export const INITIAL_LOGIN_FORM_STATE: LoginFormState = {
   email: '',
   password: '',
 };
 
 const LoginForm: React.FC = () => {
-  const [formState, setFormState] = useState<LoginFormState>(() => initialLoginFormState);
+  const navigate = useNavigate();
 
-  const loginAction = (prevState: unknown, formData: FormData) =>
-    loginUser(prevState, formData, setFormState);
-  const [state, action, isPending] = useActionState(loginAction, null);
+  const { mutate: loginMutation } = useLogin(navigate);
+
+  const [formState, setFormState] = useState<LoginFormState>(() => INITIAL_LOGIN_FORM_STATE);
+
+  const loginFormAction = (prevState: unknown, formData: FormData) =>
+    performLogin(prevState, formData, setFormState, loginMutation);
+  const [state, action, isPending] = useActionState(loginFormAction, null);
 
   const handleChange = (name: keyof LoginFormState, value: string) => {
     setFormState((prev) => ({ ...prev, [name]: value }));

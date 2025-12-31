@@ -3,9 +3,16 @@ import { useAppState } from '../../../store/hooks';
 import Logo from '../../shared/Logo/Logo';
 import MenuBar from '../Menu/MenuBar';
 import Navigation from '../Navigation/Navigation';
+import { shallowEqual } from 'react-redux';
 
 const Sidebar: React.FC = () => {
-  const isOpen = useAppState((state) => state.toggle.isOpen);
+  const { isOpen, isAuthenticated } = useAppState(
+    (state) => ({
+      isOpen: state.toggle.isOpen,
+      isAuthenticated: Boolean(state.auth.accessToken),
+    }),
+    shallowEqual
+  );
 
   return (
     <div
@@ -14,9 +21,13 @@ const Sidebar: React.FC = () => {
         isOpen ? 'max-xl:w-3/5 max-md:min-w-full ' : ''
       )}
     >
-      <div className="max-xl:hidden">{<Logo />}</div>
-      {<MenuBar />}
-      <Navigation />
+      <div className={isAuthenticated ? 'max-xl:hidden' : ''}>{<Logo />}</div>
+      {isAuthenticated && (
+        <>
+          <MenuBar />
+          <Navigation />
+        </>
+      )}
     </div>
   );
 };

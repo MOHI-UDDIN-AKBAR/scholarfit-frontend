@@ -1,14 +1,15 @@
-import { Link } from 'react-router';
 import InputField from '../../ui/Input/InputField';
 import type { RegisterFormState } from '../../../types/auth';
 import { useActionState, useState } from 'react';
-import { registerUser } from '../../../actions/auth-action';
+import { submitRegisterForm } from '../../../actions/auth-action';
 import clsx from 'clsx';
 import { LoadingSpinner } from '../../shared/LoadingSpinner/LoadingSpinner';
 import Button from '../../ui/Button/Button';
+import { useNavigate } from 'react-router';
+import { useRegisterUser } from '../../../services/mutations/auth';
 
-export const initialRegisterFormState: RegisterFormState = {
-  fullName: '',
+export const INITIAL_REGISTER_FORM_STATE: RegisterFormState = {
+  name: '',
   email: '',
   password: '',
   confirmPassword: '',
@@ -16,26 +17,30 @@ export const initialRegisterFormState: RegisterFormState = {
 };
 
 const RegisterForm: React.FC = () => {
-  const [formState, setFormState] = useState<RegisterFormState>(() => initialRegisterFormState);
+  const navigate = useNavigate();
 
-  const loginAction = (prevState: unknown, formData: FormData) =>
-    registerUser(prevState, formData, setFormState);
-  const [state, action, isPending] = useActionState(loginAction, null);
+  const { mutate: registerMutation } = useRegisterUser(navigate);
+
+  const [formState, setFormState] = useState<RegisterFormState>(() => INITIAL_REGISTER_FORM_STATE);
+  const registerFormAction = (prevState: unknown, formData: FormData) =>
+    submitRegisterForm(prevState, formData, setFormState, registerMutation);
+
+  const [state, action, isPending] = useActionState(registerFormAction, null);
 
   const handleChange = (name: keyof RegisterFormState, value: string) => {
     setFormState((prev) => ({ ...prev, [name]: value }));
   };
-  console.log(state);
+
   return (
     <form className="grid gap-4 text-gray-700" action={action}>
       <InputField
-        name="fullName"
+        name="name"
         label="Full Name"
         type="text"
-        value={formState.fullName}
-        onChange={(e) => handleChange('fullName', e.target.value)}
+        value={formState.name}
+        onChange={(e) => handleChange('name', e.target.value)}
         required={true}
-        error={!state?.fullName?.isValid ? state?.fullName?.error : null}
+        error={!state?.name?.isValid ? state?.name?.error : null}
         containerClassName="grid shrink"
         labelClassName="block font-bold text-gray-700  pb-0.5 pl-2"
         inputClassName="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"

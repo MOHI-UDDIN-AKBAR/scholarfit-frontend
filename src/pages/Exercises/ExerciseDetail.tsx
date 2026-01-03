@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { Link, useParams } from 'react-router';
 import Button from '../../components/ui/Button/Button';
 import Icon from '../../components/ui/Icon/Icon';
 import ExerciseDemonstration from '../../components/exercises/ExerciseDetail/ExerciseDemonstration/ExerciseDemonstration';
@@ -7,8 +7,46 @@ import PersonalStats from '../../components/exercises/ExerciseDetail/PersonalSta
 import AddToWorkoutPanel from '../../components/exercises/ExerciseDetail/AddToWorkoutPanel/AddToWorkoutPanel';
 import RelatedExercises from '../../components/exercises/ExerciseDetail/RelatedExercises/RelatedExercises';
 import ExerciseDetailHeader from '../../components/exercises/ExerciseDetail/ExerciseDetailHeader/ExerciseDetailHeader';
+import { useGetExerciseById } from '../../services/queries/exercise';
+import { LoadingSpinner } from '../../components/shared/LoadingSpinner/LoadingSpinner';
 
 const ExerciseDetail: React.FC = () => {
+  const { exerciseId } = useParams<{ exerciseId: string }>();
+
+  if (!exerciseId) return null;
+
+  const { data: response, isError, error, isLoading } = useGetExerciseById(exerciseId);
+
+  if (isLoading) {
+    return (
+      <section className="px-4 mt-8 sm:px-0 h-100">
+        <div className="grid h-full">
+          <LoadingSpinner size="xl" variant="primary" />
+        </div>
+      </section>
+    );
+  }
+
+  if (isError) {
+    return (
+      <section className="px-4 mt-8 h-100 sm:px-0">
+        <div className="grid h-full place-items-center">
+          {error?.message || 'Failed to load exercises'}
+        </div>
+      </section>
+    );
+  }
+
+  if (!response || !response.data) {
+    return (
+      <section className="px-4 mt-8 h-60 sm:px-0">
+        <div className="grid h-full place-items-center">No exercise found </div>
+      </section>
+    );
+  }
+
+  const singleExercise = response.data;
+
   return (
     <section className="max-w-full py-6 mx-auto sm:px-6 lg:px-8">
       <div className="px-4 mb-4 sm:px-0">
@@ -22,16 +60,29 @@ const ExerciseDetail: React.FC = () => {
           </Button>
         </Link>
       </div>
-      <ExerciseDetailHeader />
+      <ExerciseDetailHeader
+        name={singleExercise.name}
+        exerciseType={singleExercise.exerciseType}
+        equipments={singleExercise.equipments}
+        bodyParts={singleExercise.bodyParts}
+        overview={singleExercise.overview}
+      />
 
       <div className="px-4 mt-6 sm:px-0">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          <ExerciseDemonstration />
+          <ExerciseDemonstration
+            videoUrl={singleExercise.videoUrl}
+            instructions={singleExercise.instructions}
+            targetMuscles={singleExercise.targetMuscles}
+            secondaryMuscles={singleExercise.secondaryMuscles}
+            exerciseTips={singleExercise.exerciseTips}
+            variations={singleExercise.variations}
+          />
           <div className="space-y-6">
             <ExerciseOverview />
             <PersonalStats />
             <AddToWorkoutPanel />
-            <RelatedExercises />
+            <RelatedExercises relatedExerciseIds={singleExercise.relatedExerciseIds} />
           </div>
         </div>
       </div>

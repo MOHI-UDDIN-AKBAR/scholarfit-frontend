@@ -1,10 +1,25 @@
 import clsx from 'clsx';
-import { exerciseIcons, singleExercise } from '../../exercise-mock-data';
 import { capitalize } from '../../../../utils/helpers/formatUtils';
 import Icon from '../../../ui/Icon/Icon';
 import Button from '../../../ui/Button/Button';
+import type { CategoryType } from '../../../../types/exercise';
+import { EXERCISE_ICONS } from '../../../../utils/constants/exercise';
 
-const ExerciseDetailHeader: React.FC = () => {
+type ExerciseDetailHeaderProps = {
+  name: string;
+  exerciseType: CategoryType;
+  equipments: string[];
+  bodyParts: string[];
+  overview: string;
+};
+
+const ExerciseDetailHeader: React.FC<ExerciseDetailHeaderProps> = ({
+  name,
+  exerciseType,
+  equipments,
+  bodyParts,
+  overview,
+}) => {
   return (
     <section className="px-4 mb-3 xl:mb-10 sm:px-0">
       <div className="overflow-hidden bg-white shadow sm:rounded-lg">
@@ -12,29 +27,29 @@ const ExerciseDetailHeader: React.FC = () => {
           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
             <div className="flex-1">
               <div className="flex items-center">
-                <h1 className="text-3xl font-bold text-gray-900">{singleExercise.name}</h1>
+                <h1 className="text-3xl font-bold text-gray-900">{name}</h1>
                 <span
                   className={clsx(
                     'ml-4 inline-flex items-center px-2.5 py-1 rounded-full text-sm font-medium ',
-                    exerciseIcons[singleExercise.exerciseType].iconStyle
-                      ? exerciseIcons[singleExercise.exerciseType].iconStyle
+                    EXERCISE_ICONS[exerciseType].iconStyle
+                      ? EXERCISE_ICONS[exerciseType].iconStyle
                       : 'bg-green-100 text-green-800'
                   )}
                 >
-                  {singleExercise.exerciseType}
+                  {exerciseType}
                 </span>
               </div>
 
               <div className="flex flex-wrap items-center gap-4 mt-4 md:gap-6">
                 <div className="flex items-center">
                   <Icon
-                    name={exerciseIcons[singleExercise.exerciseType].icon}
+                    name={EXERCISE_ICONS[exerciseType].icon}
                     className={clsx(
                       'mr-2 w-6 h-7 p-1 rounded-md',
-                      exerciseIcons[singleExercise.exerciseType].iconStyle
+                      EXERCISE_ICONS[exerciseType].iconStyle
                     )}
                   ></Icon>
-                  {singleExercise.equipments.map((equipment) => (
+                  {equipments.map((equipment) => (
                     <div className="flex items-center text-sm md:text-base" key={equipment}>
                       <span className="text-gray-500 ">{capitalize(equipment)}</span>
                     </div>
@@ -58,7 +73,7 @@ const ExerciseDetailHeader: React.FC = () => {
               </div>
 
               <div className="flex flex-wrap gap-2 mt-4">
-                {singleExercise.bodyParts.map((bodyPart) => (
+                {bodyParts.map((bodyPart) => (
                   <span
                     className="inline-flex items-center px-3 py-1 text-sm font-medium text-blue-800 bg-blue-100 rounded-full"
                     key={bodyPart}
@@ -86,14 +101,7 @@ const ExerciseDetailHeader: React.FC = () => {
               </Button>
             </div>
           </div>
-          <p className="my-6 mt-8 text-lg text-gray-600 ">
-            The Bench Press is a classic strength training exercise that primarily targets the
-            chest, shoulders, and triceps, contributing to upper body muscle development. It is
-            suitable for anyone, from beginners to professional athletes, looking to improve their
-            upper body strength and muscular endurance. Individuals may want to incorporate bench
-            press into their routine for its effectiveness in enhancing physical performance,
-            promoting bone health, and improving body composition.{' '}
-          </p>
+          <p className="my-6 mt-8 text-lg text-gray-600 ">{overview}</p>
         </div>
       </div>
     </section>

@@ -1,16 +1,20 @@
 import clsx from 'clsx';
-import { getExerciseIcon } from '../../../utils/helpers/exerciseUtils';
 import Icon from '../../ui/Icon/Icon';
-import { type Exercise } from '../exercise-mock-data';
 import { capitalize } from '../../../utils/helpers/formatUtils';
 import { Link } from 'react-router';
 import Button from '../../ui/Button/Button';
+import type { CategoryType, Exercise } from '../../../types/exercise';
+import { EXERCISE_ICONS } from '../../../utils/constants/exercise';
 
 type ExerciseCardProps = {
   exercise: Exercise;
 };
+
 const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
-  const exerciseIcon = getExerciseIcon(exercise.exerciseType);
+  const exerciseIcon = EXERCISE_ICONS[exercise.exerciseType as CategoryType];
+
+  if (!exercise || !exerciseIcon) return null;
+
   return (
     <div className="overflow-hidden bg-white rounded-lg shadow">
       <div className="grid h-full gap-8 p-5">
@@ -18,7 +22,7 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
           <div
             className={clsx(
               'shrink-0 rounded-md p-2',
-              exerciseIcon.iconStyle ? exerciseIcon.iconStyle : ''
+              exerciseIcon.iconStyle && exerciseIcon.iconStyle
             )}
           >
             <Icon name={exerciseIcon.icon} className="w-8 h-8 "></Icon>
@@ -32,7 +36,7 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
               <span
                 className={clsx(
                   'ml-2 inline-flex items-center px-2 py-0.5 rounded text-sm font-medium',
-                  exerciseIcon.iconStyle ? exerciseIcon.iconStyle : ''
+                  exerciseIcon.iconStyle && exerciseIcon.iconStyle
                 )}
               >
                 {capitalize(exercise.exerciseType)}

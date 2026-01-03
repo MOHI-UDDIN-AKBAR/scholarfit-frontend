@@ -10,7 +10,6 @@ const InstructionStep: React.FC<InstructionStepProps> = ({ index, step }) => {
         {index + 1}
       </span>
       <div className="ml-4">
-        {/* <h3 className="text-lg font-medium text-gray-900">Set Up Position</h3> */}
         <p className="text-lg text-gray-600 ">{step}</p>
       </div>
     </div>

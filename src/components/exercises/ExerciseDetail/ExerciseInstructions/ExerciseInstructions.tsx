@@ -1,14 +1,15 @@
-import { singleExercise } from '../../exercise-mock-data';
 import InstructionStep from './InstructionStep';
 
-const ExerciseInstructions: React.FC = () => {
+type ExerciseInstructionsProps = { instructions: string[] };
+
+const ExerciseInstructions: React.FC<ExerciseInstructionsProps> = ({ instructions }) => {
   return (
     <section className="overflow-hidden bg-white rounded-md shadow sm:rounded-lg">
       <div className="px-6 py-8 sm:px-8">
         <h2 className="mb-4 text-2xl font-bold text-gray-900">Step-by-Step Instructions</h2>
         <div className="space-y-6">
-          {singleExercise.instructions.map((instruction, i) => (
-            <InstructionStep index={i} step={instruction} />
+          {instructions.map((instruction, i) => (
+            <InstructionStep index={i} step={instruction} key={i} />
           ))}
         </div>
       </div>

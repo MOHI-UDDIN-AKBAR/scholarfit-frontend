@@ -1,3 +1,4 @@
+import type { ApiResponse } from '../../types/api';
 import type {
   BodyMeasurementEntry,
   BodyMeasurementHistory,
@@ -8,55 +9,95 @@ import type {
   ProgressStats,
   UserProgress,
 } from '../../types/progress';
-import { axiosInstance } from '../axios/axiosInstance';
+import { api } from '../axios/axios';
 
 export const getBodyWeightHistory = async (): Promise<BodyWeightHistory> => {
-  const { data } = await axiosInstance.get<BodyWeightHistory>('/progress/body-weight/history');
-  return data;
+  const { data } = await api.get<ApiResponse<BodyWeightHistory>>('/progress/body-weight/history');
+
+  if (!data.success) {
+    throw new Error(data.error.message);
+  }
+
+  return data.data;
 };
 
 export const getLatestBodyWeight = async (): Promise<BodyWeightEntry> => {
-  const { data } = await axiosInstance.get<BodyWeightEntry>('/progress/body-weight/latest');
-  return data;
+  const { data } = await api.get<ApiResponse<BodyWeightEntry>>('/progress/body-weight/latest');
+
+  if (!data.success) {
+    throw new Error(data.error.message);
+  }
+
+  return data.data;
 };
 
 export const createBodyWeightEntry = async (
   entry: CreateBodyWeightInput
 ): Promise<BodyWeightEntry> => {
-  const { data } = await axiosInstance.post<BodyWeightEntry>('/progress/body-weight', entry);
-  return data;
+  const { data } = await api.post<ApiResponse<BodyWeightEntry>>('/progress/body-weight', entry);
+
+  if (!data.success) {
+    throw new Error(data.error.message);
+  }
+
+  return data.data;
 };
 
 export const getBodyMeasurementHistory = async (): Promise<BodyMeasurementHistory> => {
-  const { data } = await axiosInstance.get<BodyMeasurementHistory>(
+  const { data } = await api.get<ApiResponse<BodyMeasurementHistory>>(
     '/progress/body-measurements/history'
   );
-  return data;
+
+  if (!data.success) {
+    throw new Error(data.error.message);
+  }
+
+  return data.data;
 };
 
 export const getLatestBodyMeasurements = async (): Promise<BodyMeasurementEntry> => {
-  const { data } = await axiosInstance.get<BodyMeasurementEntry>(
+  const { data } = await api.get<ApiResponse<BodyMeasurementEntry>>(
     '/progress/body-measurements/latest'
   );
-  return data;
+
+  if (!data.success) {
+    throw new Error(data.error.message);
+  }
+
+  return data.data;
 };
 
 export const createBodyMeasurementEntry = async (
   entry: CreateBodyMeasurementInput
 ): Promise<BodyMeasurementEntry> => {
-  const { data } = await axiosInstance.post<BodyMeasurementEntry>(
+  const { data } = await api.post<ApiResponse<BodyMeasurementEntry>>(
     '/progress/body-measurements',
     entry
   );
-  return data;
+
+  if (!data.success) {
+    throw new Error(data.error.message);
+  }
+
+  return data.data;
 };
 
 export const getUserProgress = async (): Promise<UserProgress> => {
-  const { data } = await axiosInstance.get<UserProgress>('/progress');
-  return data;
+  const { data } = await api.get<ApiResponse<UserProgress>>('/progress');
+
+  if (!data.success) {
+    throw new Error(data.error.message);
+  }
+
+  return data.data;
 };
 
 export const getProgressStats = async (): Promise<ProgressStats> => {
-  const { data } = await axiosInstance.get<ProgressStats>('/progress/stats');
-  return data;
+  const { data } = await api.get<ApiResponse<ProgressStats>>('/progress/stats');
+
+  if (!data.success) {
+    throw new Error(data.error.message);
+  }
+
+  return data.data;
 };

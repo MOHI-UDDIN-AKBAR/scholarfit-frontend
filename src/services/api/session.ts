@@ -1,3 +1,4 @@
+import type { ApiResponse } from '../../types/api';
 import type {
   SessionStats,
   StreakInfo,
@@ -6,31 +7,56 @@ import type {
   WorkoutHistoryEntry,
   WorkoutHistoryInput,
 } from '../../types/session';
-import { axiosInstance } from '../axios/axiosInstance';
+import { api } from '../axios/axios';
 
 export const getSessionHistory = async (): Promise<SessionWorkoutHistory> => {
-  const { data } = await axiosInstance.get<SessionWorkoutHistory>('/sessions');
-  return data;
+  const { data } = await api.get<ApiResponse<SessionWorkoutHistory>>('/sessions');
+
+  if (!data.success) {
+    throw new Error(data.error.message);
+  }
+
+  return data.data;
 };
 
 export const getSessionStats = async (): Promise<SessionStats> => {
-  const { data } = await axiosInstance.get<SessionStats>('/sessions/stats');
-  return data;
+  const { data } = await api.get<ApiResponse<SessionStats>>('/sessions/stats');
+
+  if (!data.success) {
+    throw new Error(data.error.message);
+  }
+
+  return data.data;
 };
 
 export const getUserStreak = async (): Promise<Omit<StreakInfo, 'lastUpdated'>> => {
-  const { data } = await axiosInstance.get<Omit<StreakInfo, 'lastUpdated'>>('/sessions/streak');
-  return data;
+  const { data } = await api.get<ApiResponse<Omit<StreakInfo, 'lastUpdated'>>>('/sessions/streak');
+
+  if (!data.success) {
+    throw new Error(data.error.message);
+  }
+
+  return data.data;
 };
 
 export const getRecentSessions = async (): Promise<WorkoutHistoryEntry[]> => {
-  const { data } = await axiosInstance.get<WorkoutHistoryEntry[]>('/sessions/recent');
-  return data;
+  const { data } = await api.get<ApiResponse<WorkoutHistoryEntry[]>>('/sessions/recent');
+
+  if (!data.success) {
+    throw new Error(data.error.message);
+  }
+
+  return data.data;
 };
 
 export const getVolumeTrend = async (): Promise<VolumeTrend[]> => {
-  const { data } = await axiosInstance.get<VolumeTrend[]>('/sessions/volume-trend');
-  return data;
+  const { data } = await api.get<ApiResponse<VolumeTrend[]>>('/sessions/volume-trend');
+
+  if (!data.success) {
+    throw new Error(data.error.message);
+  }
+
+  return data.data;
 };
 
 export const createSession = async ({
@@ -38,6 +64,11 @@ export const createSession = async ({
 }: {
   sessionPayload: WorkoutHistoryInput;
 }): Promise<WorkoutHistoryEntry> => {
-  const { data } = await axiosInstance.post<WorkoutHistoryEntry>('/sessions', sessionPayload);
-  return data;
+  const { data } = await api.post<ApiResponse<WorkoutHistoryEntry>>('/sessions', sessionPayload);
+
+  if (!data.success) {
+    throw new Error(data.error.message);
+  }
+
+  return data.data;
 };

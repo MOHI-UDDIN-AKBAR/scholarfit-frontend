@@ -1,3 +1,4 @@
+import type { ApiResponse } from '../../types/api';
 import type {
   AuthResponse,
   LoginFormState,
@@ -6,43 +7,58 @@ import type {
   UserProfile,
 } from '../../types/auth';
 import { api } from '../axios/axios';
-import type { ApiResponse } from '../types';
 
 export const register = async (
   registrationData: RegisterFormData
 ): Promise<{ user: UserProfile }> => {
-  const {
-    data: { data },
-  } = await api.post<ApiResponse<{ user: UserProfile }>>('/auth/register', registrationData);
-  console.log(data);
-  return data;
+  const { data } = await api.post<ApiResponse<{ user: UserProfile }>>(
+    '/auth/register',
+    registrationData
+  );
+
+  if (!data.success) {
+    throw new Error(data.error.message);
+  }
+
+  return data.data;
 };
 
 export const login = async (loginData: LoginFormState): Promise<AuthResponse> => {
-  const {
-    data: { data },
-  } = await api.post<ApiResponse<AuthResponse>>('/auth/login', loginData);
-  console.log(data);
-  return data;
+  const { data } = await api.post<ApiResponse<AuthResponse>>('/auth/login', loginData);
+
+  if (!data.success) {
+    throw new Error(data.error.message);
+  }
+
+  return data.data;
 };
 
 export const refreshAccessToken = async (): Promise<AccessToken> => {
-  const {
-    data: { data },
-  } = await api.post<ApiResponse<AccessToken>>('/auth/refresh');
-  return data;
+  const { data } = await api.post<ApiResponse<AccessToken>>('/auth/refresh');
+
+  if (!data.success) {
+    throw new Error(data.error.message);
+  }
+
+  return data.data;
 };
 
 export const logout = async (): Promise<{ message: string }> => {
-  const {
-    data: { data },
-  } = await api.post<ApiResponse<{ message: string }>>('/auth/logout');
-  return data;
+  const { data } = await api.post<ApiResponse<{ message: string }>>('/auth/logout');
+
+  if (!data.success) {
+    throw new Error(data.error.message);
+  }
+
+  return data.data;
 };
 
 export const getUserProfile = async (): Promise<UserProfile> => {
-  const {
-    data: { data },
-  } = await api.get<ApiResponse<UserProfile>>('/auth/logout');
-  return data;
+  const { data } = await api.get<ApiResponse<UserProfile>>('/auth/logout');
+
+  if (!data.success) {
+    throw new Error(data.error.message);
+  }
+
+  return data.data;
 };

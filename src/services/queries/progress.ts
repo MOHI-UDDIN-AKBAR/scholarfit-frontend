@@ -7,50 +7,40 @@ import {
   getProgressStats,
   getUserProgress,
 } from '../api/progress';
-
-export const PROGRESS_KEYS = {
-  bodyWeightHistory: ['body-weight-history'] as const,
-  latestBodyWeight: ['latest-body-weight'] as const,
-  bodyMeasurementHistory: ['body-measurement-history'] as const,
-  latestBodyMeasurement: ['latest-body-measurement'] as const,
-  createBodyWeightEntry: ['create-body-weight-entry'] as const,
-  createBodyMeasurementEntry: ['create-body-measurement-entry'] as const,
-  userProgress: ['user-progress'] as const,
-  progressStats: ['progress-stats'] as const,
-};
+import { PROGRESS_QUERY_KEYS } from '../../utils/constants/queryKeys/progress';
 
 export const useGetBodyWeightHistory = () =>
   useQuery({
-    queryKey: PROGRESS_KEYS.bodyWeightHistory,
+    queryKey: PROGRESS_QUERY_KEYS.bodyWeightHistory,
     queryFn: getBodyWeightHistory,
   });
 
 export const useGetLatestBodyWeight = () =>
   useQuery({
-    queryKey: PROGRESS_KEYS.latestBodyWeight,
+    queryKey: PROGRESS_QUERY_KEYS.latestBodyWeight,
     queryFn: getLatestBodyWeight,
   });
 
 export const useGetBodyMeasurementHistory = () =>
   useQuery({
-    queryKey: PROGRESS_KEYS.bodyMeasurementHistory,
+    queryKey: PROGRESS_QUERY_KEYS.bodyMeasurementHistory,
     queryFn: getBodyMeasurementHistory,
   });
 
 export const useGetLatestBodyMeasurements = () =>
   useQuery({
-    queryKey: PROGRESS_KEYS.latestBodyMeasurement,
+    queryKey: PROGRESS_QUERY_KEYS.latestBodyMeasurement,
     queryFn: getLatestBodyMeasurements,
   });
 
 export const useGetUserProgress = () =>
   useQuery({
-    queryKey: PROGRESS_KEYS.userProgress,
+    queryKey: PROGRESS_QUERY_KEYS.userProgress,
     queryFn: getUserProgress,
   });
 
 export const useGetProgressStats = () =>
   useQuery({
-    queryKey: PROGRESS_KEYS.progressStats,
+    queryKey: PROGRESS_QUERY_KEYS.progressStats,
     queryFn: getProgressStats,
   });

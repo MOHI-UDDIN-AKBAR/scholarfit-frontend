@@ -1,20 +1,22 @@
 import { useQuery } from '@tanstack/react-query';
-import { getWorkoutList, getWorkoutById } from '../api/workout';
-
-export const WORKOUTS_QUERY_KEY = {
-  workouts: ['workouts'] as const,
-  detail: (id: string) => [...WORKOUTS_QUERY_KEY.workouts, id] as const,
-};
+import { getWorkoutList, getWorkoutById, getUserWorkoutList } from '../api/workout';
+import { WORKOUT_QUERY_KEYS } from '../../utils/constants/queryKeys/workout';
 
 export const useGetWorkoutList = () =>
   useQuery({
-    queryKey: WORKOUTS_QUERY_KEY.workouts,
+    queryKey: WORKOUT_QUERY_KEYS.workouts,
     queryFn: getWorkoutList,
+  });
+
+export const useGetUserWorkoutList = (userId: string) =>
+  useQuery({
+    queryKey: WORKOUT_QUERY_KEYS.userWorkout(userId),
+    queryFn: getUserWorkoutList,
   });
 
 export const useGetWorkoutById = (workoutId: string) =>
   useQuery({
-    queryKey: WORKOUTS_QUERY_KEY.detail(workoutId),
+    queryKey: WORKOUT_QUERY_KEYS.detail(workoutId),
     queryFn: () => getWorkoutById(workoutId),
     enabled: Boolean(workoutId),
   });

@@ -1,16 +1,9 @@
+import { AUTH_QUERY_KEYS } from '../../utils/constants/queryKeys/auth';
 import { getUserProfile } from '../api/auth';
 import { useQuery } from '@tanstack/react-query';
 
-export const AUTH_KEYS = {
-  userProfile: ['user-profile'] as const,
-  register: ['register'] as const,
-  login: ['login'] as const,
-  logout: ['logout'] as const,
-  refresh: ['refresh'] as const,
-};
-
 export const useGetUserProfile = () =>
   useQuery({
-    queryKey: AUTH_KEYS.userProfile,
+    queryKey: AUTH_QUERY_KEYS.userProfile,
     queryFn: getUserProfile,
   });

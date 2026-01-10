@@ -1,21 +1,27 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { register, login, logout, refreshAccessToken } from '../api/auth';
+import { register, login, logout } from '../api/auth';
 import type { NavigateFunction } from 'react-router';
 import { reduxTokenManager } from '../axios/reduxTokenManager';
 import { AUTH_QUERY_KEYS } from '../../utils/constants/queryKeys/auth';
+import store from '../../store/store';
+import { loginSuccess, setAccessToken } from '../../store/slices/authSlice';
+import type { AuthResponse, LoginFormState, RegisterFormData, UserProfile } from '../../types/auth';
+import type { ApiErrorResponse } from '../../types/api';
+import type { AxiosError } from 'axios';
 
 export const useRegisterUser = (navigate: NavigateFunction) => {
-  return useMutation({
+  return useMutation<{ user: UserProfile }, AxiosError<ApiErrorResponse>, RegisterFormData>({
     mutationKey: AUTH_QUERY_KEYS.register,
     mutationFn: register,
-    onSuccess: (data) => {
-      console.info(
-        `[${AUTH_QUERY_KEYS.register}] user ${data.user.id} is registered successfully!`
-      );
+    onSuccess: () => {
+      console.info(`[${AUTH_QUERY_KEYS.register}] user is registered successfully!`);
       navigate('/login');
     },
     onError: (error) => {
-      console.error(`[${AUTH_QUERY_KEYS.register}] user failed to register : `, error.message);
+      console.error(
+        `[${AUTH_QUERY_KEYS.register}] user failed to register : `,
+        error.response?.data?.error?.message ?? error.message
+      );
     },
   });
 };
@@ -23,16 +29,20 @@ export const useRegisterUser = (navigate: NavigateFunction) => {
 export const useLogin = (navigate: NavigateFunction) => {
   const queryClient = useQueryClient();
 
-  return useMutation({
+  return useMutation<AuthResponse, AxiosError<ApiErrorResponse>, LoginFormState>({
     mutationKey: AUTH_QUERY_KEYS.login,
     mutationFn: login,
-    onSuccess: ({ user, accessToken }) => {
-      console.info(`[${AUTH_QUERY_KEYS.login}] user ${user.id} is logged in successfully!`);
-      reduxTokenManager.setAccessToken(accessToken);
+    onSuccess: (data) => {
+      console.info(`[${AUTH_QUERY_KEYS.login}] user is logged in successfully!`);
+      store.dispatch(loginSuccess(data));
+      reduxTokenManager.setAccessToken(data.accessToken);
       navigate('/');
     },
     onError: (error) => {
-      console.error(`[${AUTH_QUERY_KEYS.login}] user failed to logged in : `, error.message);
+      console.error(
+        `[${AUTH_QUERY_KEYS.login}] user failed to logged in : `,
+        error.response?.data?.error?.message ?? error.message
+      );
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: AUTH_QUERY_KEYS.userProfile });
@@ -41,7 +51,7 @@ export const useLogin = (navigate: NavigateFunction) => {
 };
 
 export const useLogout = (navigate: NavigateFunction) =>
-  useMutation({
+  useMutation<{ message: string }, AxiosError<ApiErrorResponse>>({
     mutationKey: AUTH_QUERY_KEYS.logout,
     mutationFn: logout,
     onSuccess: () => {
@@ -49,18 +59,12 @@ export const useLogout = (navigate: NavigateFunction) =>
       navigate('/');
     },
     onError: (error) => {
-      console.error(`[${AUTH_QUERY_KEYS.logout}] failed to logged out: `, error.message);
+      console.error(
+        `[${AUTH_QUERY_KEYS.logout}] failed to logged out: `,
+        error.response?.data?.error?.message ?? error.message
+      );
     },
-  });
-
-export const useRefreshToken = () =>
-  useMutation({
-    mutationKey: AUTH_QUERY_KEYS.refresh,
-    mutationFn: refreshAccessToken,
-    onSuccess: () => {
-      console.info(`[${AUTH_QUERY_KEYS.refresh}] token refreshed successfully!`);
-    },
-    onError: (error) => {
-      console.error(`[${AUTH_QUERY_KEYS.refresh}] failed to refresh token : `, error.message);
+    onSettled: () => {
+      store.dispatch(setAccessToken(null));
     },
   });

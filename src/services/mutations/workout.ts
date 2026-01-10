@@ -1,11 +1,15 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createWorkout, deleteWorkout } from '../api/workout';
+import { addWorkoutToUserList, createWorkout, removeWorkout } from '../api/workout';
 import type { Workout, WorkoutInput } from '../../types/workout';
 import { generateMeta } from '../../utils/helpers/common-utils';
-import { WORKOUTS_QUERY_KEY } from '../queries/workout';
+import { WORKOUT_QUERY_KEYS } from '../../utils/constants/queryKeys/workout';
+import type { ApiErrorResponse } from '../../types/api';
+import type { AxiosError } from 'axios';
+import store from '../../store/store';
 
 const enrichWorkoutPayload = (payload: WorkoutInput): Workout => {
   const workoutMeta = generateMeta();
+  const userId = store.getState().auth.userInfo?.id ?? '';
 
   const programs = payload.programs.map((program) => {
     const programMeta = generateMeta();
@@ -21,6 +25,7 @@ const enrichWorkoutPayload = (payload: WorkoutInput): Workout => {
   });
 
   return {
+    userId,
     ...payload,
     ...workoutMeta,
     programs,
@@ -30,74 +35,150 @@ const enrichWorkoutPayload = (payload: WorkoutInput): Workout => {
 export const useCreateWorkout = () => {
   const queryClient = useQueryClient();
 
-  return useMutation({
+  return useMutation<
+    Workout,
+    AxiosError<ApiErrorResponse>,
+    WorkoutInput,
+    { previousWorkouts: Workout[] }
+  >({
     mutationKey: ['create-workout'],
     mutationFn: createWorkout,
 
     onMutate: async (variables) => {
       await queryClient.cancelQueries({
-        queryKey: WORKOUTS_QUERY_KEY.workouts,
+        queryKey: WORKOUT_QUERY_KEYS.workouts,
         exact: true,
       });
 
       const previousWorkouts =
-        queryClient.getQueryData<Workout[]>(WORKOUTS_QUERY_KEY.workouts) ?? [];
+        queryClient.getQueryData<Workout[]>(WORKOUT_QUERY_KEYS.workouts) ?? [];
 
       const optimisticWorkout = enrichWorkoutPayload(variables);
 
-      queryClient.setQueryData(WORKOUTS_QUERY_KEY.workouts, [
+      queryClient.setQueryData(WORKOUT_QUERY_KEYS.workouts, [
         ...previousWorkouts,
         optimisticWorkout,
       ]);
 
       return { previousWorkouts };
     },
-    onError: (error, _variables, onMutateResult) => {
-      console.error(`[create-workout] failed :  `, error.message);
-      if (onMutateResult?.previousWorkouts) {
-        queryClient.setQueryData(WORKOUTS_QUERY_KEY.workouts, onMutateResult.previousWorkouts);
+    onError: (error, _variables, context) => {
+      console.error(
+        `[create-workout] failed :  `,
+        error.response?.data?.error?.message ?? error.message
+      );
+      if (context?.previousWorkouts) {
+        queryClient.setQueryData(WORKOUT_QUERY_KEYS.workouts, context.previousWorkouts);
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: WORKOUTS_QUERY_KEY.workouts });
+      queryClient.invalidateQueries({ queryKey: WORKOUT_QUERY_KEYS.workouts });
     },
   });
 };
 
-export const useDeleteWorkout = () => {
+export const useAddWorkout = (userId: string) => {
   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationKey: ['delete-workout'],
-    mutationFn: deleteWorkout,
+  return useMutation<
+    Workout,
+    AxiosError<ApiErrorResponse>,
+    string,
+    { previousFavoritesSnapshot: Workout[] }
+  >({
+    mutationKey: ['favorite-workouts', userId],
+    mutationFn: addWorkoutToUserList,
 
-    onMutate: async (variables) => {
+    onMutate: async (workoutId) => {
       await queryClient.cancelQueries({
-        queryKey: WORKOUTS_QUERY_KEY.workouts,
-        exact: true,
+        queryKey: WORKOUT_QUERY_KEYS.userWorkout(userId),
       });
 
-      const { workoutId } = variables;
-      const previousWorkouts =
-        queryClient.getQueryData<Workout[]>(WORKOUTS_QUERY_KEY.workouts) ?? [];
+      const previousFavoritesSnapshot =
+        queryClient.getQueryData<Workout[]>(WORKOUT_QUERY_KEYS.userWorkout(userId)) ?? [];
 
-      const optimisticWorkout = previousWorkouts.filter((workout) => workout.id !== workoutId);
+      const workoutCatalog = queryClient.getQueryData<Workout[]>(WORKOUT_QUERY_KEYS.workouts) ?? [];
 
-      queryClient.setQueryData(WORKOUTS_QUERY_KEY.workouts, [
-        ...previousWorkouts,
-        optimisticWorkout,
+      const optimisticFavorite = workoutCatalog.find((workout) => workout.id === workoutId);
+
+      const alreadyExists = previousFavoritesSnapshot.some((workout) => workout.id === workoutId);
+
+      if (!optimisticFavorite || alreadyExists) {
+        return { previousFavoritesSnapshot };
+      }
+
+      queryClient.setQueryData<Workout[]>(WORKOUT_QUERY_KEYS.userWorkout(userId), [
+        ...previousFavoritesSnapshot,
+        optimisticFavorite,
       ]);
 
-      return { previousWorkouts };
+      return { previousFavoritesSnapshot };
     },
-    onError: (error, _variables, onMutateResult) => {
-      console.error(`[delete-workout] failed :  `, error.message);
-      if (onMutateResult?.previousWorkouts) {
-        queryClient.setQueryData(WORKOUTS_QUERY_KEY.workouts, onMutateResult.previousWorkouts);
+    onError: (error, _variables, context) => {
+      console.error(
+        `[add-workout-to-favorites] failed :  `,
+        error.response?.data?.error?.message ?? error.message
+      );
+      if (context?.previousFavoritesSnapshot) {
+        queryClient.setQueryData(
+          WORKOUT_QUERY_KEYS.userWorkout(userId),
+          context.previousFavoritesSnapshot
+        );
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: WORKOUTS_QUERY_KEY.workouts });
+      queryClient.invalidateQueries({ queryKey: WORKOUT_QUERY_KEYS.userWorkout(userId) });
+      queryClient.invalidateQueries({ queryKey: WORKOUT_QUERY_KEYS.workouts });
+    },
+  });
+};
+
+export const useRemoveWorkout = (userId: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<
+    boolean,
+    AxiosError<ApiErrorResponse>,
+    { workoutId: string },
+    { previousFavoritesSnapshot: Workout[] }
+  >({
+    mutationKey: ['delete-workout'],
+    mutationFn: removeWorkout,
+
+    onMutate: async ({ workoutId }) => {
+      await queryClient.cancelQueries({
+        queryKey: WORKOUT_QUERY_KEYS.userWorkout(userId),
+        exact: true,
+      });
+
+      const previousFavoritesSnapshot =
+        queryClient.getQueryData<Workout[]>(WORKOUT_QUERY_KEYS.userWorkout(userId)) ?? [];
+
+      const isExist = previousFavoritesSnapshot.some((workout) => workout.id === workoutId);
+
+      if (!isExist) return { previousFavoritesSnapshot };
+
+      queryClient.setQueryData<Workout[]>(
+        WORKOUT_QUERY_KEYS.userWorkout(userId),
+        previousFavoritesSnapshot
+      );
+
+      return { previousFavoritesSnapshot };
+    },
+    onError: (error, _variables, context) => {
+      console.error(
+        `[delete-workout] failed :  `,
+        error.response?.data?.error?.message ?? error.message
+      );
+      if (context?.previousFavoritesSnapshot) {
+        queryClient.setQueryData(
+          WORKOUT_QUERY_KEYS.userWorkout(userId),
+          context.previousFavoritesSnapshot
+        );
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: WORKOUT_QUERY_KEYS.userWorkout(userId) });
     },
   });
 };

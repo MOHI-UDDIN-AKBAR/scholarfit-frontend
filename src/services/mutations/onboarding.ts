@@ -1,18 +1,21 @@
 import { useMutation } from '@tanstack/react-query';
 import { onboarding } from '../api/onboarding';
-
-const ONBOARDING_KEYS = {
-  onboarding: ['onboarding'] as const,
-};
+import { ONBOARDING_QUERY_KEYS } from '../../utils/constants/queryKeys/onboarding';
+import type { ApiErrorResponse } from '../../types/api';
+import type { AxiosError } from 'axios';
+import type { Onboarding, OnboardingInput } from '../../types/onboarding';
 
 export const useOnboarding = () =>
-  useMutation({
-    mutationKey: ONBOARDING_KEYS.onboarding,
+  useMutation<Onboarding, AxiosError<ApiErrorResponse>, OnboardingInput>({
+    mutationKey: ONBOARDING_QUERY_KEYS.onboarding,
     mutationFn: onboarding,
-    onSuccess: (data) => {
-      console.log(`${ONBOARDING_KEYS.onboarding} Onboarding for ${data.userId} successful`);
+    onSuccess: () => {
+      console.log(`${ONBOARDING_QUERY_KEYS.onboarding} Onboarding successful`);
     },
     onError: (error) => {
-      console.error(`${ONBOARDING_KEYS.onboarding} Failed to do onboarding`, error.message);
+      console.error(
+        `${ONBOARDING_QUERY_KEYS.onboarding} Failed to do onboarding`,
+        error.response?.data?.error?.message ?? error.message
+      );
     },
   });

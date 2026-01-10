@@ -1,5 +1,3 @@
-import type { ErrorCode } from '../services/types';
-
 export type CategoryType =
   | 'STRENGTH'
   | 'CARDIO'
@@ -37,27 +35,8 @@ export interface SingleExercise extends Exercise {
 
 export type PaginationDirection = 'next' | 'prev';
 
-export type PaginationMeta = {
-  total: number;
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
-  nextCursor: string;
-  previousCursor?: string;
-};
-
-export interface ApiResponse<T = unknown> {
-  success: boolean;
-  data?: T;
-  error?: { code: ErrorCode; message: string; details?: any; timestamp?: string };
-  meta?: {
-    timestamp: string;
-    requestId?: string;
-    pagination?: PaginationMeta;
-  };
-}
-
 export type ExercisesQueryState = {
-  response: ApiResponse<Exercise[]> | undefined;
+  exercises: Exercise[] | undefined;
   isLoading: boolean;
   isError: boolean;
   error: Error | null;

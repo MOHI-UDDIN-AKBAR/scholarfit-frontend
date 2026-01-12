@@ -1,4 +1,4 @@
-import { testimonials } from '../../../config/testimonials';
+import { TESTIMONIALS } from '../../../config/testimonials';
 import Testimonial from './Testimonial';
 
 const Testimonials: React.FC = () => {
@@ -16,7 +16,7 @@ const Testimonials: React.FC = () => {
 
         <div className="mt-16">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            {testimonials.map((testimonial) => (
+            {TESTIMONIALS.map((testimonial) => (
               <Testimonial
                 key={`${testimonial.id}-${testimonial.name}`}
                 testimonial={testimonial}

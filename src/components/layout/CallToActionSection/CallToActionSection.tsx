@@ -1,3 +1,5 @@
+import { Link } from 'react-router';
+
 const CallToActionSection: React.FC = () => {
   return (
     <section className="py-16 bg-gray-900 xl:py-28">
@@ -10,12 +12,12 @@ const CallToActionSection: React.FC = () => {
         </p>
         <div className="flex justify-center mt-8">
           <div className="inline-flex rounded-md shadow">
-            <a
-              href="#"
+            <Link
+              to="/workouts"
               className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-white no-underline border border-transparent rounded-md bg-primary-600 hover:bg-primary-700"
             >
-              Start Your Free Trial
-            </a>
+              Start Your Journey For Free
+            </Link>
           </div>
           <div className="inline-flex ml-3">
             <a

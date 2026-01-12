@@ -1,5 +1,5 @@
 import Feature from './Feature';
-import { features } from '../../../config/features';
+import { FEATURES } from '../../../config/features';
 
 const Features: React.FC = () => {
   return (
@@ -16,7 +16,7 @@ const Features: React.FC = () => {
 
       <div className="mt-16 max-md:px-2">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {features.map((featureItem) => (
+          {FEATURES.map((featureItem) => (
             <Feature featureItem={featureItem} key={featureItem.title} />
           ))}
         </div>

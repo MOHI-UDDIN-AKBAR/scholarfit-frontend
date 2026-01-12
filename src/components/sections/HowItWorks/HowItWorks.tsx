@@ -1,4 +1,4 @@
-import { guideSteps } from '../../../config/guide-steps';
+import { GUIDE_STEPS } from '../../../config/guide-steps';
 import GuideStep from './GuideStep';
 
 const HowItWorks: React.FC = () => {
@@ -16,7 +16,7 @@ const HowItWorks: React.FC = () => {
 
         <div className="mt-16">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            {guideSteps.map((guideStep) => (
+            {GUIDE_STEPS.map((guideStep) => (
               <GuideStep key={guideStep.id} guideStep={guideStep} />
             ))}
           </div>

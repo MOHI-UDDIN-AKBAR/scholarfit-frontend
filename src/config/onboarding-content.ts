@@ -108,7 +108,7 @@ export type OnboardingPersonalDetail = {
   dailyActivityLevel: { label: string; activityLevels: ActivityLevelDataType[] };
 };
 
-export const onboardingHeaderContent: OnboardingHeaderContent = {
+export const ONBOARDING_HEADER_CONTENT: OnboardingHeaderContent = {
   goalsStep: {
     headerTitle: `Welcome to ScholarFit!`,
     headerContent: `Let's personalize your fitness journey. This will take about 3 minutes.`,

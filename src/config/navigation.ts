@@ -1,8 +1,8 @@
-export const navItems = [
+export const NAV_ITEMS = [
   { label: 'Home', path: '/' },
   { label: 'Dashboard', path: '/dashboard' },
   { label: 'Workouts', path: '/workouts' },
-  { label: 'Exercise', path: '/exercise' },
+  { label: 'Exercises', path: '/exercises' },
   { label: 'Progress', path: '/progress' },
-  { label: 'About', path: '/about' },
+  { label: 'Profile', path: '/profile' },
 ] as const;

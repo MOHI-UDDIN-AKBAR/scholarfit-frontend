@@ -4,7 +4,7 @@ export type GuideStepType = {
   description: string;
 };
 
-export const guideSteps: GuideStepType[] = [
+export const GUIDE_STEPS: GuideStepType[] = [
   {
     id: 1,
     heading: 'Set Your Goals',

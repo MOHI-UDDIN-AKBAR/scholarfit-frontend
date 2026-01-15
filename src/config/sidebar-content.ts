@@ -21,10 +21,10 @@ export type SidebarContent = {
   footer: string;
 };
 
-const sharedFooter =
+const SHARED_FOOTER =
   'Join 50,000+ athletes and fitness enthusiasts achieving their goals with ScholarFit';
 
-export const loginSidebarContent: SidebarContent = {
+export const LOGIN_SIDEBAR_CONTENT: SidebarContent = {
   heading: 'Welcome Back!',
   description:
     'Your fitness journey continues. Track your progress and keep pushing towards your goals.',
@@ -56,10 +56,10 @@ export const loginSidebarContent: SidebarContent = {
     },
   ],
 
-  footer: sharedFooter,
+  footer: SHARED_FOOTER,
 };
 
-export const registrationSidebarContent: SidebarContent = {
+export const REGISTRATION_SIDEBAR_CONTENT: SidebarContent = {
   heading: 'Start Your Fitness Journey',
   description:
     'Join thousands who have transformed their lives through structured fitness tracking and education.',
@@ -97,5 +97,5 @@ export const registrationSidebarContent: SidebarContent = {
     },
   ],
 
-  footer: sharedFooter,
+  footer: SHARED_FOOTER,
 };

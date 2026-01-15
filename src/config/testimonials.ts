@@ -6,7 +6,7 @@ export type TestimonialType = {
   reviewRate: number;
 };
 
-export const testimonials: TestimonialType[] = [
+export const TESTIMONIALS: TestimonialType[] = [
   {
     id: 1,
     name: 'Sarah Johnson',

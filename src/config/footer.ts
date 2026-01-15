@@ -16,7 +16,7 @@ export type FooterDataType = {
   links: FooterLink[];
 };
 
-export const footerData: FooterDataType[] = [
+export const FOOTERS: FooterDataType[] = [
   {
     title: 'Solutions',
     className: '',

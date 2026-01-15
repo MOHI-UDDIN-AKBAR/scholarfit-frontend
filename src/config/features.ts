@@ -7,7 +7,7 @@ export type FeatureType = {
   color: string;
 };
 
-export const features: FeatureType[] = [
+export const FEATURES: FeatureType[] = [
   {
     label: 'dumbbell',
     title: 'Exercise Library',

@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 type ToggleState = { isOpen: boolean };
 
@@ -8,8 +8,8 @@ const toggleSlice = createSlice({
   name: 'toggle',
   initialState,
   reducers: {
-    toggleSideBar: (state) => {
-      state.isOpen = !state.isOpen;
+    toggleSideBar: (state, action: PayloadAction<boolean | undefined>) => {
+      state.isOpen = action?.payload !== undefined ? action?.payload : !state.isOpen;
     },
   },
 });

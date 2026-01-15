@@ -1,7 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 export type ProgressTab = {
-  id: 'overview' | 'weight' | 'measurements' | 'strength';
+  id: 'overview' | 'weight' | 'measurements';
   label: string;
 };
 
@@ -9,7 +9,6 @@ const PROGRESS_TABS: ProgressTab[] = [
   { id: 'overview', label: 'Overview' },
   { id: 'weight', label: 'Weight' },
   { id: 'measurements', label: 'Measurements' },
-  { id: 'strength', label: 'Strength' },
 ];
 
 const DEFAULT_PROGRESS_TAB: ProgressTab = { id: 'overview', label: 'Overview' };

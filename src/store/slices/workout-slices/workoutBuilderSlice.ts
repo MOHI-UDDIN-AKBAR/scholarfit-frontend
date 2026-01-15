@@ -6,7 +6,7 @@ import type {
   ProgramInput,
   WorkoutInput,
 } from '../../../types/workout';
-import type { Exercise } from '../../../types/exercise';
+import type { CategoryType, Exercise } from '../../../types/exercise';
 
 export type BuilderStepLabel = 'Workout Details' | 'Add Programs' | 'Save';
 
@@ -50,6 +50,11 @@ export interface WorkoutBuilderStatus {
   isReadyToCreate: boolean;
 }
 
+type ExerciseFilterOption = {
+  exerciseName?: string;
+  categoryType?: CategoryType;
+};
+
 type WorkoutBuilderState = {
   stepIndicator: StepIndicatorState;
   workoutDetailsForm?: WorkoutDetailsFormState;
@@ -58,6 +63,7 @@ type WorkoutBuilderState = {
   workoutExercises: DraftExerciseConfig[];
   selectedExerciseConfiguration: DraftExerciseConfig;
   workoutPayload?: WorkoutInput;
+  exerciseFilterOptions: ExerciseFilterOption;
 } & WorkoutBuilderUIState &
   WorkoutBuilderStatus;
 
@@ -106,6 +112,10 @@ const DEFAULT_STATE: WorkoutBuilderState = {
   currentProgramId: undefined,
   isReadyToSave: false,
   isReadyToCreate: false,
+  exerciseFilterOptions: {
+    exerciseName: undefined,
+    categoryType: 'STRENGTH',
+  },
 } satisfies WorkoutBuilderState;
 
 const workoutBuilderSlice = createSlice({
@@ -246,6 +256,9 @@ const workoutBuilderSlice = createSlice({
     setCurrentProgramId: (state, action: PayloadAction<{ programId: string }>) => {
       state.currentProgramId = action.payload.programId;
     },
+    setExerciseFilterOptions: (state, action: PayloadAction<ExerciseFilterOption>) => {
+      state.exerciseFilterOptions = { ...state.exerciseFilterOptions, ...action.payload };
+    },
   },
 });
 
@@ -273,6 +286,7 @@ export const {
   addWorkoutProgram,
   setCurrentProgramId,
   removeWorkoutProgram,
+  setExerciseFilterOptions,
 } = workoutBuilderSlice.actions;
 
 export const workoutBuilderReducer = workoutBuilderSlice.reducer;

@@ -2,8 +2,6 @@ import { Link, useParams } from 'react-router';
 import Button from '../../components/ui/Button/Button';
 import Icon from '../../components/ui/Icon/Icon';
 import ExerciseDemonstration from '../../components/exercises/ExerciseDetail/ExerciseDemonstration/ExerciseDemonstration';
-import ExerciseOverview from '../../components/exercises/ExerciseDetail/ExerciseOverview/ExerciseOverview';
-import PersonalStats from '../../components/exercises/ExerciseDetail/PersonalStats/PersonalStats';
 import AddToWorkoutPanel from '../../components/exercises/ExerciseDetail/AddToWorkoutPanel/AddToWorkoutPanel';
 import RelatedExercises from '../../components/exercises/ExerciseDetail/RelatedExercises/RelatedExercises';
 import ExerciseDetailHeader from '../../components/exercises/ExerciseDetail/ExerciseDetailHeader/ExerciseDetailHeader';
@@ -15,7 +13,7 @@ const ExerciseDetail: React.FC = () => {
 
   if (!exerciseId) return null;
 
-  const { data: response, isError, error, isLoading } = useGetExerciseById(exerciseId);
+  const { data: singleExercise, isError, error, isLoading } = useGetExerciseById(exerciseId);
 
   if (isLoading) {
     return (
@@ -37,15 +35,13 @@ const ExerciseDetail: React.FC = () => {
     );
   }
 
-  if (!response || !response.data) {
+  if (!singleExercise) {
     return (
       <section className="px-4 mt-8 h-60 sm:px-0">
         <div className="grid h-full place-items-center">No exercise found </div>
       </section>
     );
   }
-
-  const singleExercise = response.data;
 
   return (
     <section className="max-w-full py-6 mx-auto sm:px-6 lg:px-8">
@@ -79,8 +75,6 @@ const ExerciseDetail: React.FC = () => {
             variations={singleExercise.variations}
           />
           <div className="space-y-6">
-            <ExerciseOverview />
-            <PersonalStats />
             <AddToWorkoutPanel />
             <RelatedExercises relatedExerciseIds={singleExercise.relatedExerciseIds} />
           </div>

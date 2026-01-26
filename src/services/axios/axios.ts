@@ -5,7 +5,7 @@ import axios, {
   type InternalAxiosRequestConfig,
 } from 'axios';
 import { refreshAccessToken } from '../api/auth';
-import { reduxTokenManager } from './reduxTokenManager';
+import { tokenService, type TokenService } from './auth/tokenService';
 
 type FailedRequest = {
   resolve: (value: unknown) => void;
@@ -21,12 +21,6 @@ interface ApiClientConfig {
   enableResponseInterceptors?: boolean;
 }
 
-export interface TokenManager {
-  getAccessToken: () => string | null;
-  setAccessToken: (token: string) => void;
-  clearTokens: () => void;
-}
-
 const DEFAULT_CONFIG: ApiClientConfig = {
   baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api/v1/',
   withCredentials: true,
@@ -39,10 +33,10 @@ class ApiClient {
   private instance: AxiosInstance;
   private isRefreshing = false;
   private failedQueue: FailedRequest[] = [];
-  private tokenManager: TokenManager;
+  private tokenManager: TokenService;
   private config: ApiClientConfig;
 
-  constructor(config: Partial<ApiClientConfig> = {}, tokenManager: TokenManager) {
+  constructor(config: Partial<ApiClientConfig> = {}, tokenManager: TokenService) {
     this.config = { ...DEFAULT_CONFIG, ...config };
     this.tokenManager = tokenManager;
 
@@ -67,7 +61,7 @@ class ApiClient {
   private setupRequestInterceptors(): void {
     this.instance.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
-        const token = this.tokenManager.getAccessToken();
+        const token = this.tokenManager.get();
 
         if (token && config.headers) {
           config.headers.Authorization = `Bearer ${token}`;
@@ -108,7 +102,7 @@ class ApiClient {
         // Handle 401 Unauthorized errors
         if (error.response?.status === 401 && originalRequest && !originalRequest._retry) {
           if (originalRequest.url?.includes('/auth/refresh')) {
-            this.tokenManager.clearTokens();
+            this.tokenManager.clear();
             return Promise.reject(this.normalizeError(error));
           }
 
@@ -134,7 +128,7 @@ class ApiClient {
     try {
       const { accessToken } = await refreshAccessToken();
 
-      this.tokenManager.setAccessToken(accessToken);
+      this.tokenManager.set(accessToken);
 
       if (originalRequest.headers) {
         originalRequest.headers.Authorization = `Bearer ${accessToken}`;
@@ -144,7 +138,7 @@ class ApiClient {
 
       return this.instance(originalRequest);
     } catch (refreshError) {
-      this.tokenManager.clearTokens();
+      this.tokenManager.clear();
 
       // Reject all queued requests
       this.failedQueue.forEach(({ reject }) => reject(refreshError));
@@ -194,7 +188,7 @@ class ApiClient {
     return this.instance;
   }
 
-  public updateTokenManager(tokenManager: TokenManager): void {
+  public updateTokenManager(tokenManager: TokenService): void {
     this.tokenManager = tokenManager;
   }
 
@@ -211,4 +205,4 @@ class ApiClient {
   }
 }
 
-export const api = new ApiClient({}, reduxTokenManager).axiosInstance;
+export const api = new ApiClient({}, tokenService).axiosInstance;

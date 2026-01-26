@@ -1,13 +1,14 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { register, login, logout } from '../api/auth';
 import type { NavigateFunction } from 'react-router';
-import { reduxTokenManager } from '../axios/reduxTokenManager';
 import { AUTH_QUERY_KEYS } from '../../utils/constants/queryKeys/auth';
 import store from '../../store/store';
-import { loginSuccess, setAccessToken } from '../../store/slices/authSlice';
+import { loginSuccess } from '../../store/slices/authSlice';
 import type { AuthResponse, LoginFormState, RegisterFormData, UserProfile } from '../../types/auth';
 import type { ApiErrorResponse } from '../../types/api';
 import type { AxiosError } from 'axios';
+import { logoutAndClearAuth } from '../axios/auth/authEffects';
+import { tokenService } from '../axios/auth/tokenService';
 
 export const useRegisterUser = (navigate: NavigateFunction) => {
   return useMutation<{ user: UserProfile }, AxiosError<ApiErrorResponse>, RegisterFormData>({
@@ -34,8 +35,8 @@ export const useLogin = (navigate: NavigateFunction) => {
     mutationFn: login,
     onSuccess: (data) => {
       console.info(`[${AUTH_QUERY_KEYS.login}] user is logged in successfully!`);
-      store.dispatch(loginSuccess(data));
-      reduxTokenManager.setAccessToken(data.accessToken);
+      store.dispatch(loginSuccess(data.user));
+      tokenService.set(data.accessToken);
       navigate('/');
     },
     onError: (error) => {
@@ -56,15 +57,13 @@ export const useLogout = (navigate: NavigateFunction) =>
     mutationFn: logout,
     onSuccess: () => {
       console.info(`[${AUTH_QUERY_KEYS.logout}] Logged out successfully!`);
-      navigate('/');
+      logoutAndClearAuth();
+      navigate('/login');
     },
     onError: (error) => {
       console.error(
         `[${AUTH_QUERY_KEYS.logout}] failed to logged out: `,
         error.response?.data?.error?.message ?? error.message
       );
-    },
-    onSettled: () => {
-      store.dispatch(setAccessToken(null));
     },
   });

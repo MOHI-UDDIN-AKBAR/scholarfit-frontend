@@ -1,41 +1,32 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { UserProfile } from '../../types/auth';
+import { tokenService } from '../../services/axios/auth/tokenService';
 
 export type AuthState = {
-  accessToken: string | null;
   userInfo: UserProfile | null;
+  isAuthenticated: boolean;
 };
 
 const initialState: AuthState = {
-  accessToken: null,
   userInfo: null,
+  isAuthenticated: false,
 };
 
 export const authSlice = createSlice({
   name: 'authSlice',
   initialState,
   reducers: {
-    loginSuccess: (
-      state,
-      action: PayloadAction<{
-        accessToken: string;
-        user: UserProfile;
-      }>
-    ) => {
-      state.accessToken = action.payload.accessToken;
-      state.userInfo = action.payload.user;
+    loginSuccess: (state, action: PayloadAction<UserProfile>) => {
+      state.userInfo = action.payload;
+      state.isAuthenticated = Boolean(tokenService.get());
     },
 
-    logout: (state) => {
-      state.accessToken = null;
+    logoutSuccess: (state) => {
       state.userInfo = null;
-    },
-
-    setAccessToken: (state, action: PayloadAction<string | null>) => {
-      state.accessToken = action.payload;
+      state.isAuthenticated = false;
     },
   },
 });
 
-export const { setAccessToken, logout, loginSuccess } = authSlice.actions;
+export const { logoutSuccess, loginSuccess } = authSlice.actions;
 export const authReducer = authSlice.reducer;

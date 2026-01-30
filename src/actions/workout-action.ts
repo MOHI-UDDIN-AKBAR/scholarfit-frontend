@@ -4,12 +4,10 @@ import {
 } from '../components/workout/WorkoutSession/CurrentExerciseCard/SetLoggingInterface/SetLoggingInterface';
 import {
   addWorkoutPayload,
-  setExerciseFilterOptions,
   type WorkoutProgramWithExercises,
 } from '../store/slices/workout-slices/workoutBuilderSlice';
 import { saveSetData } from '../store/slices/workout-slices/workoutSessionSlice';
 import type { AppDispatch } from '../store/store';
-import store from '../store/store';
 import type { CategoryType } from '../types/exercise';
 import type { WorkoutDifficulty, WorkoutInput } from '../types/workout';
 import { getString } from '../utils/helpers/common-utils';
@@ -68,6 +66,7 @@ export const saveSessionDetails = async (
     maxReps: number;
     exerciseId: string;
     programId: string;
+    programName: string;
     currentSet: number;
     restTime: number;
   }
@@ -119,17 +118,10 @@ export const saveSessionDetails = async (
     },
     exerciseId: additionalData.exerciseId,
     programId: additionalData.programId,
+    programName: additionalData.programName,
   };
 
   dispatch(saveSetData(newExerciseHistoryPayload));
 
   return { isReadyToGo: true };
-};
-
-export const exerciseSearchFormAction = async (_: unknown, formData: FormData): Promise<void> => {
-  const exerciseName = (formData.get('exercise-search') as string).trim();
-  const categoryType = formData.get('exercise-category') as CategoryType;
-
-  if (exerciseName.length === 0) return;
-  store.dispatch(setExerciseFilterOptions({ exerciseName, categoryType }));
 };

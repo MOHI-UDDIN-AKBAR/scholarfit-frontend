@@ -9,10 +9,12 @@ import Progress from '../pages/Progress/Progress';
 import Workout from '../pages/Workouts/Workout';
 import WorkoutDetails from '../pages/Workouts/WorkoutDetails';
 import WorkoutSession from '../pages/Workouts/WorkoutSession';
+import Onboarding from '../pages/Onboarding/Onboarding';
 
 const PrivateRoutes: React.ReactElement = (
   <Route element={<PrivateLayout />}>
     <Route path="profile" element={<Profile />} />
+    <Route path="Onboarding" element={<Onboarding />} />
     <Route path="dashboard" element={<Dashboard />} />
     <Route path="progress" element={<Progress />} />
     <Route path="exercises" element={<ExerciseLibrary />} />

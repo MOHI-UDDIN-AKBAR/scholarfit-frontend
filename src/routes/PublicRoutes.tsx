@@ -3,14 +3,12 @@ import Home from '../pages/Home/Home';
 import PublicLayout from '../components/layout/PublicLayout';
 import Login from '../pages/Auth/Login';
 import Register from '../pages/Auth/Register';
-import Onboarding from '../pages/Onboarding/Onboarding';
 
 const PublicRoutes: React.ReactElement = (
   <Route element={<PublicLayout />}>
     <Route index element={<Home />} />
     <Route path="login" element={<Login />} />
     <Route path="register" element={<Register />} />
-    <Route path="Onboarding" element={<Onboarding />} />
   </Route>
 );
 

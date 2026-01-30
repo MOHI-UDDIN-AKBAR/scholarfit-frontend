@@ -1,5 +1,4 @@
 import { useGetDashboardStats } from '../../services/queries/dashboard';
-import { useAppState } from '../../store/hooks';
 import { getFormattedCurrentDate } from '../../utils/helpers/dateUtils';
 import { LoadingSpinner } from '../../components/shared/LoadingSpinner/LoadingSpinner';
 import Achievements from '../../components/dashboard/Achievements/Achievements';
@@ -10,11 +9,12 @@ import RecentActivity from '../../components/dashboard/RecentActivity/RecentActi
 import StatsCards from '../../components/dashboard/StatsCards/StatsCards';
 import TodaysWorkout from '../../components/dashboard/TodaysWorkout/TodaysWorkout';
 import WeeklySchedule from '../../components/dashboard/WeeklySchedule/WeeklySchedule';
+import { useGetUserProfile } from '../../services/queries/auth';
 
 const Dashboard: React.FC = () => {
-  const userName = useAppState((state) => state.auth.userInfo!.name);
-  const today = getFormattedCurrentDate();
+  const { data: userProfile, isLoading: isUserProfileLoading } = useGetUserProfile();
   const { data: dashboardStats, isLoading, isError, error } = useGetDashboardStats();
+  const today = getFormattedCurrentDate();
 
   if (isLoading) {
     return (
@@ -47,9 +47,15 @@ const Dashboard: React.FC = () => {
   return (
     <main className="py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
       <div className="px-4 mb-6 sm:px-0">
-        <h1 className="text-2xl font-bold text-gray-900 xl:text-3xl">
-          Welcome back{userName && `, ${userName}`}! 👋
-        </h1>
+        {isUserProfileLoading ? (
+          <LoadingSpinner />
+        ) : (
+          userProfile?.name && (
+            <h1 className="text-2xl font-bold text-gray-900 xl:text-3xl">
+              Welcome back{userProfile.name && `, ${userProfile.name}`}! 👋
+            </h1>
+          )
+        )}
         <p className="mt-1 text-gray-600">Today is {today}</p>
       </div>
       <StatsCards

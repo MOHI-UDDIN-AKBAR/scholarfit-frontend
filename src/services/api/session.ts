@@ -6,11 +6,26 @@ import type {
   SessionWorkoutHistory,
   WorkoutHistoryEntry,
   WorkoutHistoryInput,
+  CompletedSessionProgram,
 } from '../../types/session';
 import { api } from '../axios/axios';
 
 export const getSessionHistory = async (): Promise<SessionWorkoutHistory> => {
   const { data } = await api.get<ApiResponse<SessionWorkoutHistory>>('/sessions');
+
+  if (!data.success) {
+    throw new Error(data.error.message);
+  }
+
+  return data.data;
+};
+
+export const getCompletedSessionPrograms = async (): Promise<CompletedSessionProgram[]> => {
+  const { data } = await api.get<ApiResponse<CompletedSessionProgram[]>>(
+    '/sessions/completed-session-programs'
+  );
+
+  console.log('Query result:', data);
 
   if (!data.success) {
     throw new Error(data.error.message);

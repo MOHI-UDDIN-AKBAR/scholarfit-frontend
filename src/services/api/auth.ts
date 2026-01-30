@@ -54,7 +54,7 @@ export const logout = async (): Promise<{ message: string }> => {
 };
 
 export const getUserProfile = async (): Promise<UserProfile> => {
-  const { data } = await api.get<ApiResponse<UserProfile>>('/auth/logout');
+  const { data } = await api.get<ApiResponse<UserProfile>>('/auth/profile');
 
   if (!data.success) {
     throw new Error(data.error.message);

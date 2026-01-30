@@ -6,6 +6,7 @@ import { WORKOUT_QUERY_KEYS } from '../../utils/constants/queryKeys/workout';
 import type { ApiErrorResponse } from '../../types/api';
 import type { AxiosError } from 'axios';
 import store from '../../store/store';
+import { DASHBOARD_QUERY_KEYS } from '../../utils/constants/queryKeys/dashboard';
 
 const enrichWorkoutPayload = (payload: WorkoutInput): Workout => {
   const workoutMeta = generateMeta();
@@ -129,6 +130,7 @@ export const useAddWorkout = (userId: string) => {
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: WORKOUT_QUERY_KEYS.userWorkout(userId) });
       queryClient.invalidateQueries({ queryKey: WORKOUT_QUERY_KEYS.workouts });
+      queryClient.invalidateQueries({ queryKey: DASHBOARD_QUERY_KEYS.dashboardStats });
     },
   });
 };

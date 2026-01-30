@@ -32,6 +32,7 @@ export const useCreateSessionHistory = () => {
       queryClient.invalidateQueries({ queryKey: SESSION_QUERY_KEYS.recentSession });
       queryClient.invalidateQueries({ queryKey: SESSION_QUERY_KEYS.userStreak });
       queryClient.invalidateQueries({ queryKey: SESSION_QUERY_KEYS.volumeTrend });
+      queryClient.invalidateQueries({ queryKey: SESSION_QUERY_KEYS.completedSessionPrograms });
     },
   });
 };

@@ -5,6 +5,7 @@ import {
   getRecentSessions,
   getUserStreak,
   getVolumeTrend,
+  getCompletedSessionPrograms,
 } from '../api/session';
 import { SESSION_QUERY_KEYS } from '../../utils/constants/queryKeys/session';
 
@@ -12,6 +13,12 @@ export const useGetSessionHistory = () =>
   useQuery({
     queryKey: SESSION_QUERY_KEYS.sessionHistory,
     queryFn: getSessionHistory,
+  });
+
+export const useGetCompletedSessionPrograms = () =>
+  useQuery({
+    queryKey: SESSION_QUERY_KEYS.completedSessionPrograms,
+    queryFn: getCompletedSessionPrograms,
   });
 
 export const useGetSessionStats = () =>

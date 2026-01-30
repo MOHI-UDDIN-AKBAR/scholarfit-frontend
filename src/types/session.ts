@@ -83,3 +83,10 @@ export interface SessionWorkoutHistory {
   sessions: WorkoutHistoryEntry[];
   lastSessionDate?: string;
 }
+
+export type CompletedSessionProgram = {
+  programId: string;
+  programName: string;
+  exerciseAmount: number;
+  completedAt: string;
+};

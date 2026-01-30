@@ -9,7 +9,7 @@ export type AuthState = {
 
 const initialState: AuthState = {
   userInfo: null,
-  isAuthenticated: false,
+  isAuthenticated: Boolean(tokenService.get()),
 };
 
 export const authSlice = createSlice({
@@ -18,7 +18,7 @@ export const authSlice = createSlice({
   reducers: {
     loginSuccess: (state, action: PayloadAction<UserProfile>) => {
       state.userInfo = action.payload;
-      state.isAuthenticated = Boolean(tokenService.get());
+      state.isAuthenticated = true;
     },
 
     logoutSuccess: (state) => {

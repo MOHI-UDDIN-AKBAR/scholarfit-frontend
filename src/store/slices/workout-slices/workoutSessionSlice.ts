@@ -176,9 +176,10 @@ const workoutSessionSlice = createSlice({
         exerciseHistory: ExerciseHistory;
         exerciseId: string;
         programId: string;
+        programName: string;
       }>
     ) => {
-      const { exerciseHistory, exerciseId, programId } = action.payload;
+      const { exerciseHistory, exerciseId, programId, programName } = action.payload;
 
       const updatedExerciseHistory = state.currentExerciseProgram?.exerciseHistory
         ? [...state.currentExerciseProgram?.exerciseHistory, exerciseHistory]
@@ -209,6 +210,7 @@ const workoutSessionSlice = createSlice({
 
       state.currentWorkoutProgram = {
         programId,
+        programName,
         exercises: updatedExercises,
       };
 
@@ -278,7 +280,6 @@ const workoutSessionSlice = createSlice({
         );
         return;
       }
-      state.isTodaysProgramComplete = true;
       state.isReadyForExercise = false;
       const totalWorkoutVolume =
         state.currentWorkoutProgram?.exercises.reduce((exerciseVolume, exercise) => {
@@ -304,6 +305,7 @@ const workoutSessionSlice = createSlice({
       };
 
       state.workoutHistory = sessionPayload;
+      state.isTodaysProgramComplete = true;
     },
     startWorkoutExercise: (state, action: PayloadAction) => {
       state.isReadyForExercise = true;

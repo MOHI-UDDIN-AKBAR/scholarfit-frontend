@@ -12,12 +12,12 @@ import WeeklySchedulePreview from '../../components/workout/WorkoutSession/Weekl
 import { setActiveWorkoutSession } from '../../store/slices/workout-slices/workoutSessionSlice';
 import { shallowEqual } from 'react-redux';
 import WorkoutCompletionHeroSection from '../../components/workout/WorkoutSession/WorkoutCompletionHeroSection/WorkoutCompletionHeroSection';
-import ExerciseInstructionsPanel from '../../components/workout/WorkoutSession/ExerciseInstructionsPanel/ExerciseInstructionsPanel';
 import UpcomingExercises from '../../components/workout/WorkoutSession/UpcomingExercises/UpcomingExercises';
 import { LoadingSpinner } from '../../components/shared/LoadingSpinner/LoadingSpinner';
 import { useGetUserWorkoutList } from '../../services/queries/workout';
 import Icon from '../../components/ui/Icon/Icon';
 import EmptyState from '../../components/shared/EmptyState/EmptyState';
+import { useCreateSessionHistory } from '../../services/mutations/session';
 
 const WorkoutSession: React.FC = () => {
   const { workoutId } = useParams<{ workoutId: string }>();
@@ -119,6 +119,21 @@ const WorkoutSession: React.FC = () => {
     );
   }, []);
 
+  const { sessionWorkoutProgram, workoutHistory } = useAppState(
+    (state) => ({
+      sessionWorkoutProgram: state.workoutSession.sessionWorkoutProgram,
+      workoutHistory: state.workoutSession.workoutHistory,
+    }),
+    shallowEqual
+  );
+
+  const { mutate: sessionHistoryMutation } = useCreateSessionHistory();
+
+  useEffect(() => {
+    if (!sessionWorkoutProgram || !isTodaysProgramComplete || !workoutHistory) return;
+    sessionHistoryMutation({ sessionPayload: workoutHistory });
+  }, [sessionWorkoutProgram, isTodaysProgramComplete, workoutHistory]);
+
   if (isTodaysProgramComplete || !programScheduledToday) {
     let ScreenComponent: React.ReactNode = null;
     if (isTodaysProgramComplete && programScheduledToday) {
@@ -158,7 +173,6 @@ const WorkoutSession: React.FC = () => {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <CurrentExerciseCard todayProgram={programScheduledToday} />
-            <ExerciseInstructionsPanel />
           </div>
 
           <div className="space-y-6 lg:col-span-1">

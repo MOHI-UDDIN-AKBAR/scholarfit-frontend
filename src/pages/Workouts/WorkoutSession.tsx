@@ -1,5 +1,4 @@
 import { Link, useParams } from 'react-router';
-import AchievementToast from '../../components/workout/WorkoutSession/AchievementToast/AchievementToast';
 import CurrentExerciseCard from '../../components/workout/WorkoutSession/CurrentExerciseCard/CurrentExerciseCard';
 import Header from '../../components/workout/WorkoutSession/Header/Header';
 import QuickActions from '../../components/workout/WorkoutSession/QuickActions/QuickActions';
@@ -156,7 +155,6 @@ const WorkoutSession: React.FC = () => {
     return (
       <section className="relative">
         {ScreenComponent}
-        <AchievementToast />
         <WeeklySchedulePreview />
       </section>
     );
@@ -184,8 +182,6 @@ const WorkoutSession: React.FC = () => {
           </div>
         </div>
       </section>
-
-      <AchievementToast />
       <WeeklySchedulePreview />
     </section>
   );

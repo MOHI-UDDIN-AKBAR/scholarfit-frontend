@@ -3,10 +3,7 @@ import Icon from '../../components/ui/Icon/Icon';
 import ExerciseList from '../../components/workout/WorkoutDetail/ExerciseList/ExerciseList';
 import Header from '../../components/workout/WorkoutDetail/Header/Header';
 import ProgramOverview from '../../components/workout/WorkoutDetail/ProgramOverview/ProgramOverview';
-import ProgressTracking from '../../components/workout/WorkoutDetail/ProgressTracking/ProgressTracking';
-import QuickStats from '../../components/workout/WorkoutDetail/QuickStats/QuickStats';
 import WorkoutDescription from '../../components/workout/WorkoutDetail/WorkoutDescription/WorkoutDescription';
-import Button from '../../components/ui/Button/Button';
 import { useGetWorkoutById } from '../../services/queries/workout';
 import { LoadingSpinner } from '../../components/shared/LoadingSpinner/LoadingSpinner';
 import EmptyState from '../../components/shared/EmptyState/EmptyState';
@@ -91,38 +88,11 @@ const WorkoutDetails: React.FC = () => {
       <Header workout={workout} />
 
       <div className="px-4 mt-6 sm:px-0">
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6">
           <div className="space-y-6 lg:col-span-2">
             <WorkoutDescription description={workout.description} />
-
             <ExerciseList workoutExercises={getWorkoutExercises(workout.programs)} />
-
             <ProgramOverview workoutPrograms={workout.programs} />
-          </div>
-
-          <div className="space-y-6">
-            <QuickStats />
-            <ProgressTracking />
-            <div className="overflow-hidden bg-white shadow sm:rounded-lg">
-              <div className="px-6 py-6 sm:px-8">
-                <div className="space-y-3">
-                  <Button
-                    type="button"
-                    className="inline-flex items-center justify-center w-full px-4 py-3 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-primary-600 hover:bg-primary-700 focus:outline-none"
-                  >
-                    <Icon name="play" className="mr-2" />
-                    Start This Workout
-                  </Button>
-                  <Button
-                    type="button"
-                    className="inline-flex items-center justify-center w-full px-4 py-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none"
-                  >
-                    <Icon name="calendar" className="mr-2 far" />
-                    Add to Calendar
-                  </Button>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

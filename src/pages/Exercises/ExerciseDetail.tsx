@@ -2,8 +2,6 @@ import { Link, useParams } from 'react-router';
 import Button from '../../components/ui/Button/Button';
 import Icon from '../../components/ui/Icon/Icon';
 import ExerciseDemonstration from '../../components/exercises/ExerciseDetail/ExerciseDemonstration/ExerciseDemonstration';
-import AddToWorkoutPanel from '../../components/exercises/ExerciseDetail/AddToWorkoutPanel/AddToWorkoutPanel';
-import RelatedExercises from '../../components/exercises/ExerciseDetail/RelatedExercises/RelatedExercises';
 import ExerciseDetailHeader from '../../components/exercises/ExerciseDetail/ExerciseDetailHeader/ExerciseDetailHeader';
 import { useGetExerciseById } from '../../services/queries/exercise';
 import { LoadingSpinner } from '../../components/shared/LoadingSpinner/LoadingSpinner';
@@ -45,7 +43,7 @@ const ExerciseDetail: React.FC = () => {
 
   return (
     <section className="max-w-full py-6 mx-auto sm:px-6 lg:px-8">
-      <div className="px-4 mb-4 sm:px-0">
+      <div className="px-4 mb-6 max-md:mb-4 sm:px-0">
         <Link to="/exercises">
           <Button
             type="button"
@@ -65,7 +63,7 @@ const ExerciseDetail: React.FC = () => {
       />
 
       <div className="px-4 mt-6 sm:px-0">
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 mb-6 max-md:mb-3">
           <ExerciseDemonstration
             videoUrl={singleExercise.videoUrl}
             instructions={singleExercise.instructions}
@@ -74,10 +72,6 @@ const ExerciseDetail: React.FC = () => {
             exerciseTips={singleExercise.exerciseTips}
             variations={singleExercise.variations}
           />
-          <div className="space-y-6">
-            <AddToWorkoutPanel />
-            <RelatedExercises relatedExerciseIds={singleExercise.relatedExerciseIds} />
-          </div>
         </div>
       </div>
     </section>

@@ -44,9 +44,7 @@ const Profile: React.FC = () => {
             <BodyMeasurements measurementStats={data.measurementStats} />
           </div>
         </div>
-        <div className="space-y-8">
-          <RecentAchievements />
-        </div>
+        <div className="space-y-8">{/* <RecentAchievements /> */}</div>
       </div>
     </section>
   );

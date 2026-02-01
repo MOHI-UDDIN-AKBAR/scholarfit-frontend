@@ -1,7 +1,6 @@
 import { useGetDashboardStats } from '../../services/queries/dashboard';
 import { getFormattedCurrentDate } from '../../utils/helpers/dateUtils';
 import { LoadingSpinner } from '../../components/shared/LoadingSpinner/LoadingSpinner';
-import Achievements from '../../components/dashboard/Achievements/Achievements';
 import MonthlyCalendar from '../../components/dashboard/MonthlyCalendar/MonthlyCalendar';
 import ProgressCharts from '../../components/dashboard/ProgressCharts/ProgressCharts';
 import QuickActions from '../../components/dashboard/QuickActions/QuickActions';
@@ -76,7 +75,6 @@ const Dashboard: React.FC = () => {
           </div>
           <div className="space-y-6">
             <WeeklySchedule weeklyPrograms={dashboardStats.weeklyPrograms} />
-            <Achievements />
             <QuickActions />
             <MonthlyCalendar weeklyPrograms={dashboardStats.weeklyPrograms} />
           </div>

@@ -74,7 +74,6 @@ const Video: React.FC<VideoProps> = ({
             className={`w-full ${isLoading ? 'hidden' : 'block'}`}
           />
 
-          {/* Play Button Overlay (Only if controls = false) */}
           {!controls && !isPlaying && !isLoading && (
             <button
               onClick={handlePlay}

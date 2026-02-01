@@ -65,6 +65,8 @@ const CUSTOM_VIEWBOX: Partial<Record<IconName, string>> = {
   hand: '0 0 640 640',
   percent: '0 0 640 640',
   ruler: '0 0 640 640',
+  cloud: '0 0 640 640',
+  gifts: '0 0 640 640',
 };
 
 const DEFAULT_VIEWBOX = '0 0 24 24';

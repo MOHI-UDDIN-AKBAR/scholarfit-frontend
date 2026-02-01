@@ -1,5 +1,6 @@
 import React, { forwardRef, useId, memo } from 'react';
 import { removeSpace } from '../../../utils/helpers/formatUtils';
+import clsx from 'clsx';
 
 export type InputFieldProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'id' | 'name'> & {
   containerClassName?: string;
@@ -40,12 +41,12 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>((props, ref) =>
   const errorId = error ? `${inputId}-error` : undefined;
 
   return (
-    <div className={containerClassName}>
+    <div className={clsx(containerClassName ? containerClassName : '')}>
       {label ? (
-        <label htmlFor={inputId} className={labelClassName}>
+        <label htmlFor={inputId} className={clsx(labelClassName ? labelClassName : '')}>
           {label}
           {required && (
-            <span aria-hidden="true" className="text-fitness-red ml-1">
+            <span aria-hidden="true" className="ml-1 text-fitness-red">
               *
             </span>
           )}
@@ -58,7 +59,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>((props, ref) =>
         name={name}
         type={type}
         required={required}
-        className={inputClassName}
+        className={clsx(inputClassName ? inputClassName : '')}
         {...(rest as React.InputHTMLAttributes<HTMLInputElement>)}
       />
 

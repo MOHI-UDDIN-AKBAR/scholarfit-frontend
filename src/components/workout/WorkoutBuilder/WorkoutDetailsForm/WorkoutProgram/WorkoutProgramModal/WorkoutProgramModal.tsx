@@ -15,7 +15,7 @@ import Icon from '../../../../../ui/Icon/Icon';
 import InputField from '../../../../../ui/Input/InputField';
 import { validateNumberInRange } from '../../../../../../utils/helpers/validationUtils';
 import type { MuscleGroup } from '../../../../../../types/workout';
-import { doesProgramExistForDay } from '../../../../../../utils/helpers/workoutUtils';
+import { doesProgramExistForDay } from '../../../../../../utils/workout/program-utils';
 
 const MIN_PROGRAM_DAY_NUMBER = 1;
 const MAX_PROGRAM_DAY_NUMBER = 7;

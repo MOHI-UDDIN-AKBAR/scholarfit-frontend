@@ -1,12 +1,19 @@
 import InputField from '../../../../ui/Input/InputField';
 import Search from '../../../../ui/Search/Search';
-import { filterOptions } from '../../../workout-mock-data';
 import WorkoutGrid from '../../WorkoutGrid/WorkoutGrid';
 import { Link } from 'react-router';
 import Icon from '../../../../ui/Icon/Icon';
 import { LoadingSpinner } from '../../../../shared/LoadingSpinner/LoadingSpinner';
 import { useGetWorkoutList } from '../../../../../services/queries/workout';
 import EmptyState from '../../../../shared/EmptyState/EmptyState';
+
+export const FILTER_OPTIONS = [
+  { label: 'All Goals', value: 'All Goals' },
+  { label: 'Muscle Building', value: 'Muscle Building' },
+  { label: 'Strength', value: 'Strength' },
+  { label: 'Fat Loss', value: 'Fat Loss' },
+  { label: 'General Fitness', value: 'General Fitness' },
+];
 
 const WorkoutLibraryTab: React.FC = () => {
   const { data: workouts, isLoading, isError, error } = useGetWorkoutList();
@@ -71,7 +78,7 @@ const WorkoutLibraryTab: React.FC = () => {
             </span>
             <div className="px-2 border-2 border-gray-300 rounded-md ">
               <select className="block w-full py-2 pl-3 pr-10 text-base border-transparent! focus:outline-none focus:border-transparent! focus:shadow-none! sm:text-sm">
-                {filterOptions.map((option) => (
+                {FILTER_OPTIONS.map((option) => (
                   <option value={option.value} key={option.value}>
                     {option.label}
                   </option>

@@ -3,12 +3,12 @@ import Icon from '../../../ui/Icon/Icon';
 import Button from '../../../ui/Button/Button';
 import { Link, Navigate } from 'react-router';
 import { useAppState } from '../../../../store/hooks';
-import { isWorkoutAdded } from '../../../../utils/helpers/workoutUtils';
 import type { Workout } from '../../../../types/workout';
 import { useAddWorkout } from '../../../../services/mutations/workout';
 import { useCallback, useEffect, useState } from 'react';
 import { LoadingSpinner } from '../../../shared/LoadingSpinner/LoadingSpinner';
 import { useGetUserWorkoutList } from '../../../../services/queries/workout';
+import { isWorkoutAdded } from '../../../../utils/workout/workout-utils';
 
 type WorkoutCardProps = {
   workout: Workout;

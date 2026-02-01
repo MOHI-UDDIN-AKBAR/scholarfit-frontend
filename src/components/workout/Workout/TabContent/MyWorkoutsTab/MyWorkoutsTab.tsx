@@ -3,11 +3,12 @@ import Button from '../../../../ui/Button/Button';
 import Icon from '../../../../ui/Icon/Icon';
 import { useAppDispatch, useAppState } from '../../../../../store/hooks';
 import { selectTab } from '../../../../../store/slices/workout-slices/workoutsSlice';
-import { getTotalExerciseLength } from '../../../../../utils/helpers/workoutUtils';
 import { useGetUserWorkoutList } from '../../../../../services/queries/workout';
 import { LoadingSpinner } from '../../../../shared/LoadingSpinner/LoadingSpinner';
 import { useRemoveWorkout } from '../../../../../services/mutations/workout';
 import EmptyState from '../../../../shared/EmptyState/EmptyState';
+import { getTotalExerciseLength } from '../../../../../utils/workout/workout-utils';
+import { useGetProfileData } from '../../../../../services/queries/user-profile';
 
 const WorkoutList: React.FC<{ userId: string }> = ({ userId }) => {
   const dispatch = useAppDispatch();
@@ -127,11 +128,21 @@ const WorkoutList: React.FC<{ userId: string }> = ({ userId }) => {
 };
 
 const MyWorkoutsTab: React.FC = () => {
-  const userId = useAppState((state) => state.auth.userInfo?.id);
+  const { data, isLoading } = useGetProfileData();
 
-  if (!userId) return <Navigate to="/login" replace />;
+  if (isLoading) {
+    return (
+      <section className="px-4 mt-8 sm:px-0 h-60">
+        <div className="grid h-full">
+          <LoadingSpinner size="md" variant="primary" />
+        </div>
+      </section>
+    );
+  }
 
-  return <WorkoutList userId={userId} />;
+  if (!data || !data.user) return <Navigate to="/login" replace />;
+
+  return <WorkoutList userId={data.user.id} />;
 };
 
 export default MyWorkoutsTab;

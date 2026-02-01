@@ -9,10 +9,14 @@ import {
   Tooltip,
   Legend,
   Filler,
+  RadialLinearScale,
+  BarElement,
+  ArcElement,
   type ChartOptions,
   type ChartData,
+  type ChartType,
 } from 'chart.js';
-import { Line } from 'react-chartjs-2';
+import { Chart } from 'react-chartjs-2';
 
 ChartJS.register(
   CategoryScale,
@@ -22,14 +26,18 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  Filler
+  Filler,
+  RadialLinearScale,
+  BarElement,
+  ArcElement
 );
 
 export interface BaseChartProps {
-  data: ChartData<'line'>;
-  options?: ChartOptions<'line'>;
+  data: ChartData;
+  options?: ChartOptions;
   height?: string | number;
   width?: string | number;
+  type?: ChartType;
 }
 
 const BaseChart: React.FC<BaseChartProps> = ({
@@ -37,8 +45,9 @@ const BaseChart: React.FC<BaseChartProps> = ({
   options,
   height = '100%',
   width = '100%',
+  type = 'line',
 }) => {
-  const defaultOptions: ChartOptions<'line'> = {
+  const defaultOptions: ChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -63,37 +72,13 @@ const BaseChart: React.FC<BaseChartProps> = ({
         usePointStyle: true,
       },
     },
-    scales: {
-      x: {
-        grid: {
-          display: false,
-        },
-        ticks: {
-          color: '#6b7280',
-          font: {
-            family: 'system-ui, -apple-system, sans-serif',
-          },
-        },
-      },
-      y: {
-        grid: {
-          color: 'rgba(229, 231, 235, 0.5)',
-        },
-        ticks: {
-          color: '#6b7280',
-          font: {
-            family: 'system-ui, -apple-system, sans-serif',
-          },
-        },
-      },
-    },
   };
 
   const mergedOptions = { ...defaultOptions, ...options };
 
   return (
     <div style={{ height, width }}>
-      <Line data={data} options={mergedOptions} />
+      <Chart type={type} data={data} options={mergedOptions} />
     </div>
   );
 };

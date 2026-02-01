@@ -1,31 +1,51 @@
 import type { BaseChartProps } from './BaseChart';
 import type { ChartData } from 'chart.js';
 import BaseChart from './BaseChart';
-import { bodyWeightStatsMock, type MonthlyBodyWeightStat } from '../../store/slices/dashboardSlice';
+import type {
+  BodyWeightChartPoint,
+  LineChartPoint,
+  VolumeTrendChartPoint,
+} from '../../types/dashboard';
 
 export interface BodyWeightChartProps extends Omit<BaseChartProps, 'data'> {
-  data?: MonthlyBodyWeightStat[];
+  data?: BodyWeightChartPoint[] | VolumeTrendChartPoint[];
   showGrid?: boolean;
   showLegend?: boolean;
   lineColor?: string;
   fillColor?: string;
 }
 
-const LineChart: React.FC<BodyWeightChartProps> = ({
-  data = bodyWeightStatsMock,
+export interface LineChartProps extends Omit<BaseChartProps, 'data'> {
+  data: LineChartPoint[];
+  datasetLabel?: string;
+  xAxisLabel?: string;
+  yAxisLabel?: string;
+  showGrid?: boolean;
+  showLegend?: boolean;
+  lineColor?: string;
+  fillColor?: string;
+  tooltipFormatter?: (value: number) => string;
+}
+
+const LineChart: React.FC<LineChartProps> = ({
+  data,
+  datasetLabel = 'Value',
   showGrid = true,
   showLegend = true,
   lineColor = '#3b82f6',
   fillColor = 'rgba(59, 130, 246, 0.1)',
   options,
+  xAxisLabel = '',
+  yAxisLabel = '',
+  tooltipFormatter,
   ...props
 }) => {
   const chartData: ChartData<'line'> = {
-    labels: data.map((item) => item.month),
+    labels: data.map((point) => point.label),
     datasets: [
       {
-        label: 'Body Weight (kg)',
-        data: data.map((item) => item.value),
+        label: datasetLabel,
+        data: data.map((point) => point.value),
         borderColor: lineColor,
         backgroundColor: fillColor,
         borderWidth: 2,
@@ -47,9 +67,10 @@ const LineChart: React.FC<BodyWeightChartProps> = ({
       },
       tooltip: {
         callbacks: {
-          label: (context) => {
-            return `Weight: ${context.parsed.y} kg`;
-          },
+          label: (context) =>
+            tooltipFormatter && context.parsed.y
+              ? tooltipFormatter(context.parsed.y)
+              : `${context.parsed.y}`,
         },
       },
     },
@@ -60,24 +81,22 @@ const LineChart: React.FC<BodyWeightChartProps> = ({
           display: showGrid,
         },
         title: {
-          display: true,
-          text: 'Weight (kg)',
+          display: Boolean(yAxisLabel),
+          text: yAxisLabel,
           color: '#6b7280',
         },
       },
       x: {
         title: {
-          display: true,
-          text: 'Month',
+          display: Boolean(xAxisLabel),
+          text: xAxisLabel,
           color: '#6b7280',
         },
       },
     },
   };
 
-  const mergedOptions = { ...chartOptions, ...options };
-
-  return <BaseChart data={chartData} options={mergedOptions} {...props} />;
+  return <BaseChart data={chartData} options={{ ...chartOptions, ...options }} {...props} />;
 };
 
 export default LineChart;

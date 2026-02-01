@@ -4,11 +4,11 @@ import Icon from '../../../ui/Icon/Icon';
 import { useAppState } from '../../../../store/hooks';
 import type { Workout } from '../../../../types/workout';
 import { useAddWorkout } from '../../../../services/mutations/workout';
-import { getTotalExerciseLength, isWorkoutAdded } from '../../../../utils/helpers/workoutUtils';
 import { Navigate } from 'react-router';
 import { useCallback, useEffect, useState } from 'react';
 import { LoadingSpinner } from '../../../shared/LoadingSpinner/LoadingSpinner';
 import { useGetUserWorkoutList } from '../../../../services/queries/workout';
+import { getTotalExerciseLength, isWorkoutAdded } from '../../../../utils/workout/workout-utils';
 
 type HeaderProp = {
   workout: Workout;

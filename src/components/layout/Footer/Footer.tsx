@@ -1,4 +1,5 @@
-import { footerData, socialLinks } from '../../../config/footer';
+import { FOOTERS, socialLinks } from '../../../config/footer';
+import { getYear } from '../../../utils/helpers/dateUtils';
 import Icon from '../../ui/Icon/Icon';
 
 const Footer: React.FC = () => {
@@ -25,7 +26,7 @@ const Footer: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-8 mt-12 xl:mt-0 xl:col-span-2 md:grid-cols-4">
-            {footerData.map(({ title, links }) => (
+            {FOOTERS.map(({ title, links }) => (
               <div key={title}>
                 <h3 className="text-sm font-semibold tracking-wider text-gray-300 uppercase lg:text-lg">
                   {title}
@@ -46,7 +47,7 @@ const Footer: React.FC = () => {
 
         <div className="pt-8 mt-12 border-t border-gray-700">
           <p className="text-base text-center text-gray-400">
-            &copy; 2025 ScholarFit. All rights reserved.
+            &copy; {getYear()} ScholarFit. All rights reserved.
           </p>
         </div>
       </div>

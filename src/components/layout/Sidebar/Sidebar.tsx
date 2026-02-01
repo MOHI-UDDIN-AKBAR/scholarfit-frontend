@@ -7,10 +7,7 @@ import { shallowEqual } from 'react-redux';
 
 const Sidebar: React.FC = () => {
   const { isOpen, isAuthenticated } = useAppState(
-    (state) => ({
-      isOpen: state.toggle.isOpen,
-      isAuthenticated: Boolean(state.auth.accessToken),
-    }),
+    (state) => ({ isOpen: state.toggle.isOpen, isAuthenticated: state.auth.isAuthenticated }),
     shallowEqual
   );
 

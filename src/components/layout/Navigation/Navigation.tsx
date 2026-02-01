@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { navItems } from '../../../config/navigation';
+import { NAV_ITEMS } from '../../../config/navigation';
 import Icon from '../../ui/Icon/Icon';
 import Logo from '../../shared/Logo/Logo';
 import NavItem from './NavItem';
@@ -26,7 +26,7 @@ const Navigation: React.FC = () => {
             onClick={() => dispatch(toggleSideBar())}
           />
         </li>
-        {navItems.map((item) => (
+        {NAV_ITEMS.map((item) => (
           <NavItem item={item} key={item.label} onClick={() => dispatch(toggleSideBar(false))} />
         ))}
       </ul>

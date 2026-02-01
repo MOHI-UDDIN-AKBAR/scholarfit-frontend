@@ -1,11 +1,12 @@
 import { Link, useNavigate } from 'react-router';
 import Sidebar from '../Sidebar/Sidebar';
 import Button from '../../ui/Button/Button';
-import { useAppState } from '../../../store/hooks';
 import { useLogout } from '../../../services/mutations/auth';
+import { useAppState } from '../../../store/hooks';
 
 const Header: React.FC = () => {
-  const isAuthenticated = useAppState((state) => Boolean(state.auth.accessToken));
+  const isAuthenticated = useAppState((state) => state.auth.isAuthenticated);
+
   const navigate = useNavigate();
   const { mutate: logoutMutation } = useLogout(navigate);
 

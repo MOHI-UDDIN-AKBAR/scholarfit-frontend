@@ -5,4 +5,5 @@ export const SESSION_QUERY_KEYS = {
   userStreak: ['user-streak'] as const,
   volumeTrend: ['volume-trend'] as const,
   createSession: ['create-session'] as const,
+  completedSessionPrograms: ['completed-session-programs'] as const,
 };

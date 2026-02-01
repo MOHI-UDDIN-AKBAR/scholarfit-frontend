@@ -7,10 +7,10 @@ import ProgressTracking from '../../components/workout/WorkoutDetail/ProgressTra
 import QuickStats from '../../components/workout/WorkoutDetail/QuickStats/QuickStats';
 import WorkoutDescription from '../../components/workout/WorkoutDetail/WorkoutDescription/WorkoutDescription';
 import Button from '../../components/ui/Button/Button';
-import { getWorkoutExercises } from '../../utils/helpers/workoutUtils';
 import { useGetWorkoutById } from '../../services/queries/workout';
 import { LoadingSpinner } from '../../components/shared/LoadingSpinner/LoadingSpinner';
 import EmptyState from '../../components/shared/EmptyState/EmptyState';
+import { getWorkoutExercises } from '../../utils/workout/workout-utils';
 
 const WorkoutDetails: React.FC = () => {
   const { workoutId } = useParams<{ workoutId: string }>();

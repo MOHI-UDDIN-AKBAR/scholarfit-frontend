@@ -25,8 +25,6 @@ export const getCompletedSessionPrograms = async (): Promise<CompletedSessionPro
     '/sessions/completed-session-programs'
   );
 
-  console.log('Query result:', data);
-
   if (!data.success) {
     throw new Error(data.error.message);
   }

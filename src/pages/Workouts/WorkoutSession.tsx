@@ -5,7 +5,6 @@ import Header from '../../components/workout/WorkoutSession/Header/Header';
 import QuickActions from '../../components/workout/WorkoutSession/QuickActions/QuickActions';
 import SessionStats from '../../components/workout/WorkoutSession/SessionStats/SessionStats';
 import { useAppDispatch, useAppState } from '../../store/hooks';
-import { getWorkout, getProgramScheduledForToday } from '../../utils/helpers/workoutUtils';
 import { useEffect, useMemo } from 'react';
 import RestDayHeroSection from '../../components/workout/WorkoutSession/RestDayHeroSection/RestDayHeroSection';
 import WeeklySchedulePreview from '../../components/workout/WorkoutSession/WeeklySchedulePreview/WeeklySchedulePreview';
@@ -18,6 +17,8 @@ import { useGetUserWorkoutList } from '../../services/queries/workout';
 import Icon from '../../components/ui/Icon/Icon';
 import EmptyState from '../../components/shared/EmptyState/EmptyState';
 import { useCreateSessionHistory } from '../../services/mutations/session';
+import { getProgramScheduledForToday } from '../../utils/workout/program-utils';
+import { getWorkout } from '../../utils/workout/workout-utils';
 
 const WorkoutSession: React.FC = () => {
   const { workoutId } = useParams<{ workoutId: string }>();

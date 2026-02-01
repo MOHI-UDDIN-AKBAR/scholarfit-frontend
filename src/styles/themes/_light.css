@@ -1,0 +1,31 @@
+:root {
+  /* Light Mode Tokens */
+  --color-background: 0 0% 100%;
+  --color-foreground: 224 71% 4%;
+
+  --color-muted: 210 40% 96%;
+  --color-muted-foreground: 215 16% 47%;
+
+  --color-card: 0 0% 100%;
+  --color-card-foreground: 224 71% 4%;
+
+  --color-popover: 0 0% 100%;
+  --color-popover-foreground: 224 71% 4%;
+
+  --color-border: 214 31% 91%;
+  --color-input: 214 31% 91%;
+
+  --color-primary: 222 47% 11%;
+  --color-primary-foreground: 0 0% 100%;
+
+  --color-secondary: 210 40% 96%;
+  --color-secondary-foreground: 222 47% 11%;
+
+  --color-accent: 210 40% 96%;
+  --color-accent-foreground: 222 47% 11%;
+
+  --color-ring: 215 20% 65%;
+
+  --color-destructive: 0 84% 60%;
+  --color-destructive-foreground: 0 0% 98%;
+}

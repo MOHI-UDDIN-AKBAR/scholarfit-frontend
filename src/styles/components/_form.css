@@ -1,0 +1,87 @@
+/* Form Elements Base */
+input,
+textarea,
+select {
+  background: hsl(var(--color-background));
+  border: 1px solid hsl(var(--color-input));
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.75rem;
+  outline: none;
+  transition: box-shadow 0.2s;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  box-shadow: 0 0 0 2px hsl(var(--color-primary) / 0.4);
+}
+
+/* Checkbox */
+input[type='checkbox'] {
+  box-shadow: none;
+}
+
+/* Number Input */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+/* Form Fields */
+.input-field,
+.select-field {
+  width: 100%;
+  border: 1px solid hsl(var(--color-border));
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.input-field:focus,
+.select-field:focus {
+  outline: none;
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary-500) 20%, transparent);
+}
+
+/* Measurement Inputs */
+.measurement-input input:focus {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary-500) 10%, transparent);
+  position: relative;
+  z-index: 10;
+}
+
+/* Entry Type Buttons */
+.entry-type-btn.selected {
+  border-color: var(--color-primary-500);
+  background-color: var(--color-primary-50);
+}
+
+/* Photo Type Option */
+input[type='radio']:checked + .photo-type-option {
+  border-color: var(--color-primary-500);
+  background-color: var(--color-primary-50);
+}
+
+/* Entry Form */
+.entry-form {
+  transition: all 0.3s ease;
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  input,
+  textarea,
+  select {
+    border-width: 2px;
+  }
+}

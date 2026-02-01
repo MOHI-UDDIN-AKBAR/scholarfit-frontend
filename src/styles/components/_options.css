@@ -1,0 +1,110 @@
+/* Experience, Split, Activity Options */
+.experience-option,
+.split-option,
+.activity-option {
+  cursor: pointer;
+}
+
+.experience-option input:checked + .option-content,
+.split-option input:checked + .option-content,
+.activity-option input:checked + .option-content {
+  border-color: var(--color-primary-500);
+  background-color: var(--color-primary-50);
+}
+
+.option-content {
+  border: 2px solid hsl(var(--color-border));
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  transition: all 0.2s;
+}
+
+.option-content:hover {
+  border-color: hsl(var(--color-muted-foreground));
+}
+
+.option-header {
+  display: flex;
+  align-items: center;
+}
+
+.option-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.option-text {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.option-title {
+  font-weight: 600;
+  color: hsl(var(--color-foreground));
+}
+
+.option-subtitle {
+  font-size: 0.875rem;
+  color: hsl(var(--color-muted-foreground));
+  margin-top: 0.25rem;
+}
+
+.option-description {
+  margin-top: 1rem;
+  color: hsl(var(--color-muted-foreground));
+  font-size: 0.875rem;
+}
+
+.option-radio {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid #d1d5db;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.experience-option input:checked + .option-content .option-radio::after,
+.split-option input:checked + .option-content .option-radio::after,
+.activity-option input:checked + .option-content .option-radio::after {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: var(--color-primary-500);
+  border-radius: 50%;
+}
+
+/* Schedule and Gender Options */
+.schedule-option,
+.gender-option {
+  cursor: pointer;
+}
+
+.schedule-option input:checked + .option-display,
+.gender-option input:checked + .option-display {
+  background-color: var(--color-primary-500);
+  color: hsl(var(--color-primary-foreground));
+  background-color: var(--color-primary-500);
+}
+
+.option-display {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: 2px solid hsl(var(--color-border));
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.option-display:hover {
+  border-color: hsl(var(--color-muted-foreground));
+}

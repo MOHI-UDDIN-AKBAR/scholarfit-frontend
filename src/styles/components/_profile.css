@@ -1,0 +1,4 @@
+/* Progress Ring */
+.progress-ring {
+  transform: rotate(-90deg);
+}

@@ -1,0 +1,55 @@
+/* Exercise Items */
+.exercise-item {
+  transition: all 0.2s;
+  border-left: 4px solid transparent;
+}
+
+.exercise-item:hover {
+  border-left-color: var(--color-primary-500);
+}
+
+/* Workout Detail Exercise Item */
+.workout-detail-exercise-item {
+  transition: all 0.2s;
+}
+
+.workout-detail-exercise-item:hover {
+  box-shadow:
+    0 4px 6px -1px hsl(var(--color-foreground) / 0.1),
+    0 2px 4px -1px hsl(var(--color-foreground) / 0.06);
+}
+
+/* Drag Handle */
+.drag-handle {
+  cursor: move;
+  color: hsl(var(--color-muted-foreground));
+  transition: color 0.2s;
+}
+
+.drag-handle:hover {
+  color: hsl(var(--color-foreground));
+}
+
+/* Progress Bar */
+.progress-bar {
+  transition: width 1s ease-in-out;
+  will-change: width;
+}
+
+/* Rating Stars */
+.rating-star.active {
+  color: #fbbf24;
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .drag-handle {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .exercise-item:hover,
+  .workout-detail-exercise-item:hover {
+    transform: none;
+  }
+}

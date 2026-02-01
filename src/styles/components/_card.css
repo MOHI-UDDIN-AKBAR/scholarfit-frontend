@@ -1,0 +1,161 @@
+/* Base Card */
+.card {
+  background: hsl(var(--color-card));
+  color: hsl(var(--color-card-foreground));
+  border: 1px solid hsl(var(--color-border));
+  border-radius: var(--radius);
+  box-shadow: 0 1px 2px hsl(var(--color-foreground) / 0.05);
+  padding: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.motivation-card {
+  background: hsl(var(--color-background) / 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid hsl(var(--color-border) / 0.2);
+}
+
+.glass-card {
+  background: hsl(var(--color-background) / 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid hsl(var(--color-border) / 0.2);
+}
+
+/* Goal and Equipment Cards */
+.goal-card,
+.equipment-card {
+  cursor: pointer;
+}
+
+.goal-card input:checked + .card-content,
+.equipment-card input:checked + .card-content {
+  border-color: var(--color-primary-500);
+  background-color: var(--color-primary-50);
+}
+
+.card-content {
+  border: 2px solid hsl(var(--color-border));
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+.card-content:hover {
+  border-color: hsl(var(--color-muted-foreground));
+}
+
+.card-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.card-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-title {
+  font-weight: 600;
+  color: hsl(var(--color-foreground));
+}
+
+.card-description {
+  font-size: 0.875rem;
+  color: hsl(var(--color-muted-foreground));
+  margin-top: 0.25rem;
+}
+
+/* Category Card */
+.category-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 1rem;
+  border-radius: var(--radius-lg);
+  text-align: center;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.category-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px hsl(var(--color-foreground) / 0.1);
+}
+
+.category-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}
+
+.category-title {
+  display: block;
+  font-weight: 600;
+  color: hsl(var(--color-foreground));
+  margin-bottom: 0.25rem;
+}
+
+.category-count {
+  font-size: 0.875rem;
+  color: hsl(var(--color-muted-foreground));
+}
+
+/* Stat Card */
+
+.stat-card {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px hsl(var(--color-foreground) / 0.1);
+}
+
+/* Profile Avatar */
+.profile-avatar {
+  position: relative;
+  border: 4px solid hsl(var(--color-background));
+  box-shadow: 0 10px 25px hsl(var(--color-foreground) / 0.1);
+}
+
+/* Set Card */
+.set-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.set-card:hover {
+  transform: translateX(4px);
+  border-color: var(--color-primary-500) / 0.5;
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .goal-card,
+  .equipment-card,
+  .category-card {
+    min-height: 44px;
+  }
+
+  .card-content:hover,
+  .category-card:hover,
+  .stat-card:hover,
+  .set-card:hover {
+    transform: none;
+  }
+}

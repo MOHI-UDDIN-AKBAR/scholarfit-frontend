@@ -1,0 +1,11 @@
+.trend-up {
+  color: var(--color-fitness-green);
+}
+
+.trend-down {
+  color: var(--color-fitness-red);
+}
+
+.trend-neutral {
+  color: hsl(var(--color-muted-foreground));
+}

@@ -1,0 +1,71 @@
+/* ===========================================
+   CSS RESET & BASE STYLES
+   =========================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  min-width: 0;
+  min-height: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  max-width: var(--container-max-width);
+  background-color: hsl(var(--color-background));
+  color: hsl(var(--color-foreground));
+  font-feature-settings:
+    'rlig' 1,
+    'calt' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  margin: 0 auto;
+  padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Focus Management */
+:focus-visible {
+  outline: 2px solid (var(--color-primary-500));
+  outline-offset: 2px;
+  border-radius: var(--radius);
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+img,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Performance Containment */
+.isolate {
+  isolation: isolate;
+}
+
+.contain-layout {
+  contain: layout;
+}

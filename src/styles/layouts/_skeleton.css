@@ -1,0 +1,16 @@
+/* ===========================================
+   SKELETON LOADER
+   =========================================== */
+
+.skeleton {
+  background: hsl(var(--color-muted) / 0.5);
+  border-radius: var(--radius);
+  animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}

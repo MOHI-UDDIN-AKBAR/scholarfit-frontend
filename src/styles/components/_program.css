@@ -1,0 +1,38 @@
+/* Program Item */
+.program-item {
+  transition: all 0.2s;
+}
+
+.program-item:hover {
+  box-shadow: 0 4px 6px -1px hsl(var(--color-foreground) / 0.1);
+}
+
+/* Program Exercise Item */
+.program-exercise-item {
+  border-left: 3px solid var(--color-primary-500);
+  transition: all 0.2s;
+}
+
+.program-exercise-item:hover {
+  border-left-color: var(--color-primary-700);
+  background-color: hsl(var(--color-muted));
+}
+
+/* Upcoming Exercise */
+.upcoming-exercise {
+  transition: all 0.2s ease;
+}
+
+.upcoming-exercise:hover {
+  opacity: 1 !important;
+  transform: translateX(4px);
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .program-item:hover,
+  .program-exercise-item:hover,
+  .upcoming-exercise:hover {
+    transform: none;
+  }
+}

@@ -1,0 +1,16 @@
+/* Gradient Backgrounds */
+.gradient-bg {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.gradient-primary {
+  background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-700) 100%);
+}
+
+.gradient-success {
+  background: linear-gradient(135deg, var(--color-fitness-green) 0%, #16a34a 100%);
+}
+
+.gradient-warning {
+  background: linear-gradient(135deg, var(--color-fitness-orange) 0%, #ea580c 100%);
+}

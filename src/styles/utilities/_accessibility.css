@@ -1,0 +1,64 @@
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-fade-in,
+  .slide-up,
+  .animate-slideUp,
+  .pulse-glow,
+  .float-animation,
+  .pulse-glow-for-hero {
+    animation: none;
+  }
+
+  .category-card:hover,
+  .card-content:hover,
+  .option-content:hover,
+  .set-card:hover,
+  .stat-card:hover,
+  .program-item:hover,
+  .workout-detail-exercise-item:hover,
+  .exercise-item:hover,
+  .program-exercise-item:hover,
+  .upcoming-exercise:hover {
+    transform: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  :root {
+    --color-border: 0 0% 0%;
+    --color-input: 0 0% 0%;
+  }
+
+  .card,
+  .option-content,
+  .category-card {
+    border-width: 2px;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .card-content:hover,
+  .option-content:hover,
+  .option-display:hover,
+  .prev-btn:hover,
+  .next-btn:hover,
+  .complete-btn:hover {
+    transform: none;
+  }
+}
+
+/* Focus Visible Fallback */
+.js-focus-visible :focus:not(.focus-visible) {
+  outline: none;
+}

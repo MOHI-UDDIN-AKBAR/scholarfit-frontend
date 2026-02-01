@@ -1,17 +1,36 @@
+import clsx from 'clsx';
 import { workoutFrequencyOptionsGroup } from '../../../../../../config/onboarding-content';
 import FrequencyOption from './FrequencyOption';
 
-const FrequencyOptionsGroup: React.FC = () => {
+type FrequencyOptionsGroupProps = {
+  wrapperClassName?: string;
+  labelClassName?: string;
+};
+const FrequencyOptionsGroup: React.FC<FrequencyOptionsGroupProps> = ({
+  wrapperClassName,
+  labelClassName,
+}) => {
   const { questionTitle, options } = workoutFrequencyOptionsGroup;
 
   return (
     <section>
-      <h3 className="mb-4 text-lg font-medium text-gray-900">{questionTitle}</h3>
-      <form className="flex flex-wrap gap-3">
+      <h3
+        className={clsx(
+          'text-gray-900',
+          wrapperClassName ? wrapperClassName : 'text-lg mb-4 font-medium '
+        )}
+      >
+        {questionTitle}
+      </h3>
+      <div className="flex flex-wrap gap-3">
         {options.map((frequencyOption) => (
-          <FrequencyOption frequencyOption={frequencyOption} key={frequencyOption.value} />
+          <FrequencyOption
+            frequencyOption={frequencyOption}
+            key={frequencyOption.value}
+            labelClassName={labelClassName}
+          />
         ))}
-      </form>
+      </div>
     </section>
   );
 };

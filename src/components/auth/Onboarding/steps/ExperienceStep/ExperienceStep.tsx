@@ -1,7 +1,7 @@
 import HeaderContent from '../../shared/HeaderContent';
 import {
   onboardingExperienceOptions,
-  onboardingHeaderContent,
+  ONBOARDING_HEADER_CONTENT,
 } from '../../../../../config/onboarding-content';
 import ExperienceOption from './ExperienceOption';
 
@@ -21,7 +21,7 @@ const ExperienceOptionGroup: React.FC = () => {
 const ExperienceStep: React.FC = () => {
   return (
     <section id="step-2" className="onboarding-step">
-      <HeaderContent headerContent={onboardingHeaderContent.experienceStep} />
+      <HeaderContent headerContent={ONBOARDING_HEADER_CONTENT.experienceStep} />
 
       <div className="overflow-hidden bg-white rounded-lg shadow">
         <div className="px-6 py-8 sm:p-10">

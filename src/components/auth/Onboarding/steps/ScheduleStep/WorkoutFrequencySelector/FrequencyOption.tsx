@@ -1,11 +1,18 @@
+import { useId } from 'react';
 import type { NumericOption } from '../../../../../../config/onboarding-content';
 import { useAppDispatch, useAppState } from '../../../../../../store/hooks';
 import { selectWorkoutFrequency } from '../../../../../../store/slices/onboardingSlice';
+import clsx from 'clsx';
 
 type FrequencyOptionProps = {
   frequencyOption: NumericOption;
+  labelClassName?: string;
 };
-const FrequencyOption: React.FC<FrequencyOptionProps> = ({ frequencyOption: { value, label } }) => {
+const FrequencyOption: React.FC<FrequencyOptionProps> = ({
+  frequencyOption: { value, label },
+  labelClassName,
+}) => {
+  const uniqueId = useId();
   const dispatch = useAppDispatch();
 
   const handleWorkoutFrequency = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,10 +25,14 @@ const FrequencyOption: React.FC<FrequencyOptionProps> = ({ frequencyOption: { va
   );
 
   return (
-    <label className="schedule-option">
+    <label
+      className={clsx('schedule-option', labelClassName && labelClassName)}
+      htmlFor={`${uniqueId}-workoutFrequency`}
+    >
       <input
         type="radio"
-        name="daysPerWeek"
+        id={`${uniqueId}-workoutFrequency`}
+        name="frequency"
         value={value.toString()}
         className="sr-only"
         onChange={handleWorkoutFrequency}

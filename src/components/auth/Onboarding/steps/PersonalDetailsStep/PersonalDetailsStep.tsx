@@ -1,6 +1,6 @@
 import HeaderContent from '../../shared/HeaderContent';
 import {
-  onboardingHeaderContent,
+  ONBOARDING_HEADER_CONTENT,
   onboardingPersonalDetail,
   type Gender,
 } from '../../../../../config/onboarding-content';
@@ -104,7 +104,7 @@ const PersonalDetailsForm: React.FC = () => {
 const PersonalDetailsStep: React.FC = () => {
   return (
     <div id="step-5" className="onboarding-step">
-      <HeaderContent headerContent={onboardingHeaderContent.personalDetailsStep} />
+      <HeaderContent headerContent={ONBOARDING_HEADER_CONTENT.personalDetailsStep} />
 
       <div className="overflow-hidden bg-white rounded-lg shadow">
         <div className="px-6 py-8 sm:p-10">

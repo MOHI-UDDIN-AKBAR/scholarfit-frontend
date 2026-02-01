@@ -1,6 +1,6 @@
 import {
   onboardingGoalCards,
-  onboardingHeaderContent,
+  ONBOARDING_HEADER_CONTENT,
 } from '../../../../../config/onboarding-content';
 import HeaderContent from '../../shared/HeaderContent';
 import GoalCard from './GoalCard';
@@ -18,7 +18,7 @@ const GoalCardGroup: React.FC = () => {
 const GoalsStep: React.FC = () => {
   return (
     <div id="step-1" className="onboarding-step">
-      <HeaderContent headerContent={onboardingHeaderContent.goalsStep} />
+      <HeaderContent headerContent={ONBOARDING_HEADER_CONTENT.goalsStep} />
       <div className="overflow-hidden bg-white ">
         <div className="px-6 py-8 sm:p-10">
           <h2 className="mb-2 text-2xl font-bold text-gray-900">

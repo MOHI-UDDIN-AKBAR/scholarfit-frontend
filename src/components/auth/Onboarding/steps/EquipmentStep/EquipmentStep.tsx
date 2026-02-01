@@ -1,7 +1,7 @@
 import HeaderContent from '../../shared/HeaderContent';
 import {
   onboardingEquipmentCards,
-  onboardingHeaderContent,
+  ONBOARDING_HEADER_CONTENT,
 } from '../../../../../config/onboarding-content';
 import EquipmentCard from './EquipmentCard';
 
@@ -18,7 +18,7 @@ const EquipmentCardGroup: React.FC = () => {
 const EquipmentStep: React.FC = () => {
   return (
     <section id="step-3" className="onboarding-step">
-      <HeaderContent headerContent={onboardingHeaderContent.equipmentStep} />
+      <HeaderContent headerContent={ONBOARDING_HEADER_CONTENT.equipmentStep} />
 
       <div className="overflow-hidden bg-white rounded-lg shadow">
         <div className="px-6 py-8 sm:p-10">

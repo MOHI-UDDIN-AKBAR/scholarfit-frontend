@@ -30,9 +30,11 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
           <div className="flex-1 ml-4">
             <h3 className="text-lg font-medium text-gray-900 xl:text-xl">{exercise.name}</h3>
             <div className="flex items-center mt-2">
-              <span className="inline-flex items-center px-2 py-0.5 rounded text-sm font-medium bg-blue-100 text-blue-800">
-                Chest
-              </span>
+              {exercise.bodyParts.length > 0 && (
+                <span className="inline-flex items-center px-2 py-0.5 rounded text-sm font-medium bg-blue-100 text-blue-800">
+                  {exercise.bodyParts.join(' ')}
+                </span>
+              )}
               <span
                 className={clsx(
                   'ml-2 inline-flex items-center px-2 py-0.5 rounded text-sm font-medium',

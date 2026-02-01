@@ -2,7 +2,7 @@ import ExerciseCard from '../ExerciseCard/ExerciseCard';
 import { LoadingSpinner } from '../../shared/LoadingSpinner/LoadingSpinner';
 import type { ExercisesQueryState } from '../../../types/exercise';
 
-const ExerciseGrid: React.FC<ExercisesQueryState> = ({ isError, isLoading, response, error }) => {
+const ExerciseGrid: React.FC<ExercisesQueryState> = ({ isError, isLoading, exercises, error }) => {
   if (isLoading) {
     return (
       <section className="px-4 mt-8 sm:px-0 h-60">
@@ -23,7 +23,7 @@ const ExerciseGrid: React.FC<ExercisesQueryState> = ({ isError, isLoading, respo
     );
   }
 
-  if (!response || !response.data || response?.data?.length === 0) {
+  if (!exercises || exercises.length === 0) {
     return (
       <section className="px-4 mt-8 h-60 sm:px-0">
         <div className="grid h-full place-items-center">No exercises found </div>
@@ -34,7 +34,7 @@ const ExerciseGrid: React.FC<ExercisesQueryState> = ({ isError, isLoading, respo
   return (
     <section className="px-4 mt-8 sm:px-0">
       <div className="grid grid-cols-1 gap-6 xl:gap-8 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-        {response.data.map((exercise) => (
+        {exercises.map((exercise) => (
           <ExerciseCard exercise={exercise} key={exercise.exerciseId} />
         ))}
       </div>

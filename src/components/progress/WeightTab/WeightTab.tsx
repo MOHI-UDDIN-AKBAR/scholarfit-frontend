@@ -1,11 +1,25 @@
 import { useAppDispatch } from '../../../store/hooks';
 import { toggleWeightModal } from '../../../store/slices/progressSlice';
+import ChartContainer from '../../charts/ChartContainer';
+import LineChart from '../../charts/LineChart';
+import { LoadingSpinner } from '../../shared/LoadingSpinner/LoadingSpinner';
 import Button from '../../ui/Button/Button';
 import Icon from '../../ui/Icon/Icon';
-import { recentEntriesOfWeight } from '../progress-mock-data';
+import type { ProgressData } from '../../../pages/Progress/Progress';
+import { mapBodyWeightEntriesToChartData } from '../../../utils/workout/chart-data-utils';
+import { mapRecentWeightEntries } from '../../../utils/workout/measurement-utils';
 
-const WeightTab: React.FC = () => {
+const WeightTab: React.FC<ProgressData> = ({ userProgress, isLoading }) => {
+  if (isLoading) {
+    <LoadingSpinner size="md" />;
+  }
+
   const dispatch = useAppDispatch();
+
+  const bodyWeight = userProgress?.bodyWeight;
+
+  const bodyWeightChartData = mapBodyWeightEntriesToChartData(bodyWeight);
+  const recentWeightEntries = mapRecentWeightEntries(bodyWeight);
 
   return (
     <div className="tab-content">
@@ -20,66 +34,76 @@ const WeightTab: React.FC = () => {
               </Button>
             </div>
             <div className="mt-6 h-80">
-              <canvas id="detailedWeightChart"></canvas>
+              {bodyWeightChartData ? (
+                <ChartContainer title="Body Weight History">
+                  <LineChart
+                    data={bodyWeightChartData}
+                    height={192}
+                    showLegend={false}
+                    datasetLabel="Body Weight History"
+                    yAxisLabel="Weight (kg)"
+                    tooltipFormatter={(value) => `${value} kg`}
+                  />
+                </ChartContainer>
+              ) : (
+                <div className="overflow-hidden bg-white">
+                  <div className="px-6 py-6 sm:px-8">
+                    <div className="flex items-center justify-center h-80 text-gray-500">
+                      <p>No body weight data available</p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="mt-6">
-              <h3 className="mb-4 text-lg font-medium text-gray-900">Recent Entries</h3>
-              <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                <table className="min-w-full divide-y divide-gray-300">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th
-                        scope="col"
-                        className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                      >
-                        Date
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Weight
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Change
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Notes
-                      </th>
-                      <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                        <span className="sr-only">Actions</span>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {recentEntriesOfWeight.map((weightEntry) => (
-                      <tr key={weightEntry.weight}>
-                        <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-6">
-                          {weightEntry.date}
-                        </td>
-                        <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                          {`${weightEntry.weight} kg`}
-                        </td>
-                        <td
-                          className={`px-3 py-4 text-sm whitespace-nowrap ${Number(weightEntry.change) > 0 ? 'text-red-600' : 'text-green-600'}`}
+            {recentWeightEntries && (
+              <div className="mt-6">
+                <h3 className="mb-4 text-lg font-medium text-gray-900">Recent Entries</h3>
+                <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                  <table className="min-w-full divide-y divide-gray-300">
+                    <thead className="bg-gray-50">
+                      <tr>
+                        <th
+                          scope="col"
+                          className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                         >
-                          {`${weightEntry.change} kg`}
-                        </td>
-                        <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                          {weightEntry.notes}
-                        </td>
+                          Date
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                        >
+                          Weight
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                        >
+                          Notes
+                        </th>
+                        <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                          <span className="sr-only">Actions</span>
+                        </th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      {recentWeightEntries.map((weightEntry) => (
+                        <tr key={weightEntry.weight}>
+                          <td className="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap sm:pl-6">
+                            {weightEntry.date}
+                          </td>
+                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                            {`${weightEntry.weight} kg`}
+                          </td>
+                          <td className="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                            {weightEntry.notes ?? ''}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

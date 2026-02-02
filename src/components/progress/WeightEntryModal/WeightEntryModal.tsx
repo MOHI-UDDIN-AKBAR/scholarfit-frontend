@@ -1,10 +1,11 @@
 import { useActionState, useState } from 'react';
-import { useAppDispatch } from '../../../store/hooks';
+import { useAppDispatch, useAppState } from '../../../store/hooks';
 import { toggleWeightModal } from '../../../store/slices/progressSlice';
 import Button from '../../ui/Button/Button';
 import Icon from '../../ui/Icon/Icon';
 import { saveBodyWeight } from '../../../actions/progress-action';
 import { LoadingSpinner } from '../../shared/LoadingSpinner/LoadingSpinner';
+import { useAddBodyWeightEntry } from '../../../services/mutations/progress';
 
 export type BodyWeightFormErrors = {
   weight?: string;
@@ -14,9 +15,14 @@ export type BodyWeightFormErrors = {
 const WeightEntryModal: React.FC = () => {
   const [formErrors, setFormErrors] = useState<BodyWeightFormErrors | null>(null);
   const dispatch = useAppDispatch();
+  const userId = useAppState((state) => state.auth.userInfo?.id);
+
+  const { mutate: onBodyWeightMutation, isPending } = useAddBodyWeightEntry();
+
+  if (!userId) return null;
 
   const submitBodyWeightAction = (prevState: unknown, formData: FormData) =>
-    saveBodyWeight(prevState, formData, dispatch, setFormErrors);
+    saveBodyWeight(prevState, formData, dispatch, setFormErrors, onBodyWeightMutation, userId);
 
   const [_, submitBodyWeight, isSubmitting] = useActionState(submitBodyWeightAction, null);
 
@@ -43,25 +49,6 @@ const WeightEntryModal: React.FC = () => {
           </Button>
         </div>
         <div className="p-6">
-          {/* <div className="mb-6">
-            <label className="flex items-center mb-2 text-sm font-medium text-gray-700">
-              <Icon name="calculator" className="mr-2 -mt-1"></Icon>
-              <span>Entry Date and Time</span>
-            </label>
-            <div className="flex space-x-4">
-              <input
-                type="date"
-                id="entry-date"
-                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-              />
-              <input
-                type="time"
-                id="entry-time"
-                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-              />
-            </div>
-          </div> */}
-
           <div className="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2">
             <div className="measurement-input">
               <label
@@ -122,7 +109,7 @@ const WeightEntryModal: React.FC = () => {
             Cancel
           </Button>
           <Button type="submit">
-            {isSubmitting ? (
+            {isSubmitting || isPending ? (
               <LoadingSpinner
                 text="Saving Entry..."
                 showText={true}

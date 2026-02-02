@@ -1,15 +1,131 @@
 import { useActionState, useState } from 'react';
 import { saveBodyMeasurements } from '../../../actions/progress-action';
-import {
-  measurementFields,
-  measurementTips,
-  type MeasurementKey,
-} from '../../ProfileContainer/profile-mock-data';
 import Button from '../../ui/Button/Button';
 import Icon from '../../ui/Icon/Icon';
-import { useAppDispatch } from '../../../store/hooks';
+import { useAppDispatch, useAppState } from '../../../store/hooks';
 import { LoadingSpinner } from '../../shared/LoadingSpinner/LoadingSpinner';
 import { toggleMeasurementModal } from '../../../store/slices/progressSlice';
+import { useAddMeasurementEntry } from '../../../services/mutations/progress';
+import type { IconName } from '../../ui/Icon';
+import type { MeasurementKey } from '../../../types/progress';
+
+export interface MeasurementTip {
+  id: string;
+  icon: IconName;
+  text: string;
+}
+
+export const measurementTips: MeasurementTip[] = [
+  {
+    id: 'tip-1',
+    icon: 'ruler',
+    text: 'Measure at the same time each day',
+  },
+  {
+    id: 'tip-2',
+    icon: 'user',
+    text: 'Stand relaxed, tape parallel to floor',
+  },
+];
+
+export interface MeasurementField {
+  id: MeasurementKey;
+  label: string;
+  icon: IconName;
+  placeholder: string;
+  unitOptions: string[];
+  iconColor: string;
+  lastValue?: string;
+  trend?: {
+    value: string;
+    direction: 'up' | 'down' | 'neutral';
+    color: string;
+  };
+  inputType?: 'number' | 'text' | 'date' | 'time';
+  step?: number;
+  ringColor?: string;
+}
+
+export const measurementFields: MeasurementField[] = [
+  {
+    id: 'chest',
+    label: 'Chest',
+    iconColor: 'text-blue-600',
+    icon: 'heart',
+    placeholder: '102.0',
+    unitOptions: ['cm', 'inches'],
+    lastValue: '101.5 cm',
+    trend: { value: '+0.5', direction: 'up', color: 'text-green-600' },
+    inputType: 'number',
+    step: 0.1,
+    ringColor: 'focus:ring-blue-500',
+  },
+  {
+    id: 'waist',
+    label: 'Waist',
+    iconColor: 'text-green-600',
+    icon: 'circle',
+    placeholder: '86.0',
+    unitOptions: ['cm', 'inches'],
+    lastValue: '86.5 cm',
+    trend: { value: '-0.5', direction: 'down', color: 'text-red-600' },
+    inputType: 'number',
+    step: 0.1,
+    ringColor: 'focus:ring-green-500',
+  },
+  {
+    id: 'arms',
+    label: 'Arms',
+    iconColor: 'text-orange-600',
+    icon: 'hand',
+    placeholder: '36.0',
+    unitOptions: ['cm', 'inches'],
+    lastValue: '35.8 cm',
+    trend: { value: '+0.2', direction: 'up', color: 'text-green-600' },
+    inputType: 'number',
+    step: 0.1,
+    ringColor: 'focus:ring-orange-500',
+  },
+  {
+    id: 'bodyFat',
+    label: 'Body Fat',
+    iconColor: 'text-purple-600',
+    icon: 'percent',
+    placeholder: '18.0',
+    unitOptions: ['%'],
+    lastValue: '18.5%',
+    trend: { value: '-0.5', direction: 'down', color: 'text-green-600' },
+    inputType: 'number',
+    step: 0.1,
+    ringColor: 'focus:ring-purple-500',
+  },
+  {
+    id: 'hips',
+    label: 'Hips',
+    iconColor: 'text-pink-600',
+    icon: 'user',
+    placeholder: '98.0',
+    unitOptions: ['cm', 'inches'],
+    lastValue: '98.5 cm',
+    trend: { value: '-0.5', direction: 'down', color: 'text-green-600' },
+    inputType: 'number',
+    step: 0.1,
+    ringColor: 'focus:ring-pink-500',
+  },
+  {
+    id: 'thighs',
+    label: 'Thighs',
+    iconColor: 'text-teal-600',
+    icon: 'personRunning',
+    placeholder: '58.0',
+    unitOptions: ['cm', 'inches'],
+    lastValue: '58.0 cm',
+    trend: { value: '0', direction: 'neutral', color: 'text-gray-600' },
+    inputType: 'number',
+    step: 0.1,
+    ringColor: 'focus:ring-teal-500',
+  },
+];
 
 export type BodyMeasurementFormErrors = Partial<
   Record<MeasurementKey | 'notes' | 'date' | 'time', string>
@@ -18,9 +134,21 @@ export type BodyMeasurementFormErrors = Partial<
 const MeasurementModal: React.FC = () => {
   const [formErrors, setFormErrors] = useState<BodyMeasurementFormErrors>({});
   const dispatch = useAppDispatch();
+  const userId = useAppState((state) => state.auth.userInfo?.id);
+
+  const { mutate: onBodyMeasurementMutation, isPending } = useAddMeasurementEntry();
+
+  if (!userId) return null;
 
   const handleMeasurementSubmit = (prevState: unknown, formData: FormData) =>
-    saveBodyMeasurements(prevState, formData, dispatch, setFormErrors);
+    saveBodyMeasurements(
+      prevState,
+      formData,
+      dispatch,
+      setFormErrors,
+      onBodyMeasurementMutation,
+      userId
+    );
 
   const [_, submitAction, isSubmitting] = useActionState(handleMeasurementSubmit, null);
 
@@ -97,7 +225,6 @@ const MeasurementModal: React.FC = () => {
                 <div className="flex">
                   <input
                     type={field.inputType}
-                    // step="0.1"
                     id={`${field.id}-measurement`}
                     name={`${field.id}`}
                     className="flex-1 px-4 py-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -163,7 +290,7 @@ const MeasurementModal: React.FC = () => {
             Cancel
           </Button>
           <Button type="submit">
-            {isSubmitting ? (
+            {isSubmitting || isPending ? (
               <LoadingSpinner
                 text="Saving Measurements..."
                 showText={true}

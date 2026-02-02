@@ -1,6 +1,7 @@
 import { useAppDispatch } from '../../../store/hooks';
 import { updateExercisesQuery } from '../../../store/slices/exercisesSlice';
-import type { PaginationDirection, PaginationMeta } from '../../../types/exercise';
+import type { PaginationMeta } from '../../../types/api';
+import type { PaginationDirection } from '../../../types/exercise';
 import Button from '../../ui/Button/Button';
 import clsx from 'clsx';
 

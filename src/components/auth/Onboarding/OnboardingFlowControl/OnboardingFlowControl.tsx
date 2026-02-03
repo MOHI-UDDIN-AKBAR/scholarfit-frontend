@@ -9,6 +9,8 @@ import Button from '../../../ui/Button/Button';
 import { useCallback } from 'react';
 import { shallowEqual } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { useOnboarding } from '../../../../services/mutations/onboarding';
+import type { Onboarding } from '../../../../types/onboarding';
 
 const OnboardingFlowControl: React.FC = () => {
   const navigate = useNavigate();
@@ -27,10 +29,9 @@ const OnboardingFlowControl: React.FC = () => {
   const goBack = useCallback(() => dispatch(previousOnboardingStep()), [previousOnboardingStep]);
   const goNext = useCallback(() => dispatch(nextOnboardingStep()), [nextOnboardingStep]);
 
+  const { mutate: mutateOnboarding } = useOnboarding(navigate);
   const handleOnboardingSubmission = () => {
-    console.log(onboardingData);
-    // ready for post api call with
-    navigate('/workouts');
+    mutateOnboarding(onboardingData as Onboarding);
   };
   return (
     <div>

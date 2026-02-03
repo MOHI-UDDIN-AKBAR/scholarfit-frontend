@@ -14,7 +14,7 @@ export type WeightUnit = 'kg' | 'lbs';
 export type ActivityLevel = 'sedentary' | 'light' | 'moderate' | 'very' | 'extreme';
 
 export type Onboarding = {
-  userId: string;
+  userId?: string;
   fitnessGoal: OnboardingFitnessGoal[];
   experienceLevel: ExperienceLevel;
   equipments: string[];

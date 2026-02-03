@@ -37,7 +37,12 @@ export const useLogin = (navigate: NavigateFunction) => {
       console.info(`[${AUTH_QUERY_KEYS.login}] user is logged in successfully!`);
       store.dispatch(loginSuccess(data.user));
       tokenService.set(data.accessToken);
-      navigate('/');
+
+      if (typeof data.user.isFirstLogin === 'boolean' && data.user.isFirstLogin) {
+        navigate('/Onboarding');
+      } else {
+        navigate('/');
+      }
     },
     onError: (error) => {
       console.error(

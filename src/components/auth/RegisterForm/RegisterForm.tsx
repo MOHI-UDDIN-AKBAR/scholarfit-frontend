@@ -87,7 +87,7 @@ const RegisterForm: React.FC = () => {
           type="checkbox"
           id="acceptTerms"
           name="acceptTerms"
-          className="w-5 h-5 bg-white border-gray-300 border-none checked:bg-indigo-600 checked:border-indigo-600 focus:outline-none focus:ring-0 hover:cursor-pointer"
+          className="w-5 h-5 p-0.5! px-[0.6rem]! border-none checked:bg-indigo-600! checked:border-indigo-600! focus:outline-none focus:ring-0 hover:cursor-pointer bg-none!"
           required
         />
         <label htmlFor="acceptTerms" className="w-full ml-2 text-sm text-gray-700 ">

@@ -25,6 +25,7 @@ export interface UserProfile {
   isOnboarded: boolean;
   avatarUrl?: string;
   createdAt: Date;
+  isFirstLogin?: true;
 }
 
 export type AccessToken = {

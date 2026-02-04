@@ -1,10 +1,14 @@
+import { Link } from 'react-router';
+import { useAppDispatch } from '../../../store/hooks';
 import type { ScheduledProgram } from '../../../types/dashboard';
-import Button from '../../ui/Button/Button';
 import Icon from '../../ui/Icon/Icon';
+import { selectTab } from '../../../store/slices/workout-slices/workoutsSlice';
 
 const TodaysWorkout: React.FC<{ scheduledProgram: ScheduledProgram | null }> = ({
   scheduledProgram,
 }) => {
+  const dispatch = useAppDispatch();
+
   if (!scheduledProgram) {
     return (
       <section className="px-4 mt-8 h-60 sm:px-0">
@@ -36,13 +40,14 @@ const TodaysWorkout: React.FC<{ scheduledProgram: ScheduledProgram | null }> = (
             </div>
           </div>
           <div className="flex space-x-3">
-            <Button
-              type="button"
+            <Link
+              to="/workouts"
+              onClick={() => dispatch(selectTab('My Workouts'))}
               className="inline-flex items-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-primary-600 hover:bg-primary-700 focus:outline-none"
             >
               <Icon name="play" className="mr-2"></Icon>
               Start Workout
-            </Button>
+            </Link>
           </div>
         </div>
 

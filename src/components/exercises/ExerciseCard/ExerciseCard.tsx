@@ -46,14 +46,7 @@ const ExerciseCard: React.FC<ExerciseCardProps> = ({ exercise }) => {
             </div>
           </div>
         </div>
-        <div className="flex items-center justify-between">
-          <Button
-            type="button"
-            className="inline-flex items-center px-3 py-1 text-sm font-medium leading-4 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm lg:text-base hover:bg-gray-50 focus:outline-none"
-          >
-            <Icon name="heart" className="mr-2 fill-pink-600" />
-            Favorite
-          </Button>
+        <div className="flex items-center justify-end">
           <Link
             to={exercise.exerciseId}
             className="text-sm font-medium text-blue-600 lg:text-base hover:text-blue-500"

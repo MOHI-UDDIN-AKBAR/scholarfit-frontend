@@ -1,9 +1,9 @@
 import clsx from 'clsx';
 import { capitalize } from '../../../../utils/helpers/formatUtils';
 import Icon from '../../../ui/Icon/Icon';
-import Button from '../../../ui/Button/Button';
 import type { CategoryType } from '../../../../types/exercise';
 import { EXERCISE_ICONS } from '../../../../utils/constants/exercise';
+import { Link } from 'react-router';
 
 type ExerciseDetailHeaderProps = {
   name: string;
@@ -85,20 +85,13 @@ const ExerciseDetailHeader: React.FC<ExerciseDetailHeaderProps> = ({
             </div>
 
             <div className="flex mt-6 space-x-3 lg:mt-0">
-              <Button
-                type="button"
-                className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none"
-              >
-                <Icon name="heart" className="mr-2 fill-pink-600" />
-                Favorite
-              </Button>
-              <Button
-                type="button"
+              <Link
+                to="/workouts/create-workout"
                 className="inline-flex items-center px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-primary-600 hover:bg-primary-700 focus:outline-none"
               >
                 <Icon name="plus" className="mr-2" />
                 Add to Workout
-              </Button>
+              </Link>
             </div>
           </div>
           <p className="my-6 mt-8 text-lg text-gray-600 ">{overview}</p>

@@ -108,20 +108,6 @@ const MeasurementsChartContainer: React.FC<MeasurementsChartContainerProps> = ({
               );
             })}
           </div>
-
-          <div className="p-4 mt-6 rounded-lg bg-blue-50">
-            <h4 className="mb-2 text-sm font-medium text-gray-900">Progress Summary</h4>
-            <div className="grid grid-cols-2 gap-2">
-              <div>
-                <div className="text-xs text-gray-500">Muscle Gain</div>
-                <div className="text-sm font-medium text-green-600">+5 cm total</div>
-              </div>
-              <div>
-                <div className="text-xs text-gray-500">Waist Reduction</div>
-                <div className="text-sm font-medium text-green-600">-3 cm</div>
-              </div>
-            </div>
-          </div>
         </div>
         <div>
           <h3 className="mb-4 text-lg font-medium text-gray-900">Current Measurements</h3>
@@ -139,7 +125,7 @@ const MeasurementsChartContainer: React.FC<MeasurementsChartContainerProps> = ({
         <div className="mt-6">
           <h3 className="mb-4 text-lg font-medium text-gray-900">Measurement History</h3>
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
+            <table className="min-w-full! divide-y divide-gray-200">
               <thead>
                 <tr>
                   <th className="px-3 py-2 text-xs font-medium text-left text-gray-500 uppercase">

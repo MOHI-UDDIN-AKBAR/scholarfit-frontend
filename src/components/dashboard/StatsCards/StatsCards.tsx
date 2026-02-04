@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 import Icon from '../../ui/Icon/Icon';
 import type { BodyWeightStats, DashboardStat, WeeklyGoal } from '../../../types/dashboard';
-import { useMemo } from 'react';
 import { buildDashboardStats } from '../../../utils/workout/dashboard-utils';
 
 type StatsCardProps = {
@@ -54,7 +53,7 @@ type StatsCardsProps = {
   totalPrograms: number;
 };
 const StatsCards: React.FC<StatsCardsProps> = (props) => {
-  const stats = useMemo(() => buildDashboardStats(props), [props]);
+  const stats = buildDashboardStats(props);
 
   const isStatsValueEmpty = stats.every(
     (stat) =>

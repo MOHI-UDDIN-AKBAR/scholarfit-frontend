@@ -28,7 +28,9 @@ const CompletedTab: React.FC = () => {
   if (!completedPrograms || completedPrograms.length === 0) {
     return (
       <section className="px-4 mt-8 h-60 sm:px-0">
-        <div className="grid h-full place-items-center">No Programs Found found </div>
+        <div className="grid h-full place-items-center">
+          You haven't completed any program yet!{' '}
+        </div>
       </section>
     );
   }

@@ -62,7 +62,8 @@ const WorkoutLibraryTab: React.FC = () => {
   }
   return (
     <section className="tab-content active">
-      <div className="flex flex-col mt-6 md:flex-row md:items-center md:justify-between">
+      {/* TODO: Need to add functionality for input and search */}
+      {/* <div className="flex flex-col mt-6 md:flex-row md:items-center md:justify-between">
         <Search containerClassName="w-full sm:max-w-xs">
           <InputField
             name="workout"
@@ -87,7 +88,7 @@ const WorkoutLibraryTab: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <WorkoutGrid workouts={workouts} />
     </section>

@@ -48,7 +48,7 @@ const WeightTab: React.FC<ProgressData> = ({ userProgress, isLoading }) => {
               ) : (
                 <div className="overflow-hidden bg-white">
                   <div className="px-6 py-6 sm:px-8">
-                    <div className="flex items-center justify-center h-80 text-gray-500">
+                    <div className="flex items-center justify-center text-gray-500 h-80">
                       <p>No body weight data available</p>
                     </div>
                   </div>
@@ -59,7 +59,7 @@ const WeightTab: React.FC<ProgressData> = ({ userProgress, isLoading }) => {
               <div className="mt-6">
                 <h3 className="mb-4 text-lg font-medium text-gray-900">Recent Entries</h3>
                 <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                  <table className="min-w-full divide-y divide-gray-300">
+                  <table className="min-w-full! divide-y divide-gray-300">
                     <thead className="bg-gray-50">
                       <tr>
                         <th
